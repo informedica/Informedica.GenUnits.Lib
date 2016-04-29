@@ -1,6 +1,13 @@
 # GenUnits
 Basic units of measure library enabling calculation with units
 
+## Build Status
+
+Mono | .NET
+---- | ----
+[![Mono CI Build Status](https://img.shields.io/travis/halcwb/GenUnits/master.svg)](https://travis-ci.org/halcwb/GenUnits) | [![.NET Build Status](https://img.shields.io/appveyor/ci/halcwb/GenUnits/master.svg)](https://ci.appveyor.com/project/halcwb/GenUnits)
+
+
 # Background
 
 Calculating values that have an unit of measure, like mass, time, volume etc.. is inherintly difficult when different units are involved. This specifically applies to the field of medical prescription calculations. For example calculating a drip rate can be awkward, like:

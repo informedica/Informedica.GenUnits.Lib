@@ -1,0 +1,76 @@
+# Ignore all files using an opt-inn approach
+*
+
+# Add .gitignore and .gitattributes
+!.gitignore
+!.gitattributes
+
+# Add license
+!LICENSE.txt
+
+# Add todo list
+!ToDo.txt
+
+# Add md files
+!*.md
+
+# Add fsx files
+!*.fsx
+
+# Add command and batch files
+!*.cmd
+!*.sh
+
+# Add proc file
+!Procfile
+
+# Add paket bootstrapper
+!/.paket/
+!/.paket/paket.bootstrapper.exe
+
+# Add dependencies file
+!paket.dependencies
+!paket.lock
+!paket.references
+
+# Add yml files to ci on appveyor and travis
+!appveyor.yml
+!.travis.yml
+
+# Add solution file
+!*.sln
+
+# Add fsharp project files
+!*.fsproj
+
+# Add configurarion files
+!*App.config
+
+# Add fsharp source files
+!*.fs
+
+# Add source files
+!/scripts/
+!/src/
+!/src/Informedica.GenUnits.Lib/
+!/src/Informedica.GenUnits.Lib/Scripts/
+
+# Add test files
+!/tests/
+!/tests/Informedica.GenUnits.Tests/
+
+# Ignore generated documentation files
+/docs/content/**/*.md
+
+# Add documentation
+!/docs/
+!/docs/content/
+!/docs/tools/
+!/docs/tools/templates/
+!/docs/tools/templates/*.cshtml
+!/docs/files/
+!/docs/files/img/
+!/docs/files/img/*.png
+
+
+

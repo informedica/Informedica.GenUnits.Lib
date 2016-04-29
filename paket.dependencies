@@ -1,0 +1,23 @@
+source https://nuget.org/api/v2
+
+// group build
+
+nuget FSharp.Formatting
+nuget Fake
+nuget SourceLink.Fake
+nuget Newtonsoft.Json
+
+github fsharp/FAKE modules/Octokit/Octokit.fsx
+
+// group project
+
+nuget FSPowerPack.Community
+
+// group test
+
+nuget FsUnit
+nuget NUnit ~> 2
+nuget NUnit.Runners ~> 2
+nuget Unquote
+nuget FsCheck
+nuget FsCheck.NUnit

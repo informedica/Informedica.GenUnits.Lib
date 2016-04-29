@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Informedica.GenUnits.lib", "src\Informedica.GenUnits.lib\Informedica.GenUnits.lib.fsproj", "{11FC65A6-C4DC-4ED7-A617-576BF2E8AD44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{204CE0ED-3EEA-4417-BC1E-BCA4545EA45D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7C141538-4630-4BBE-8789-A51A316F3C3F}"
+	ProjectSection(SolutionItems) = preProject
+		build.fsx = build.fsx
+		paket.dependencies = paket.dependencies
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{AA874653-9B28-4F48-B52C-7B826ACA9722}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\AppVeyor.fsx = scripts\AppVeyor.fsx
+		scripts\Settings.fsx = scripts\Settings.fsx
+		scripts\Travis.fsx = scripts\Travis.fsx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "content", "content", "{642E6C61-5781-4A65-AC92-100A08D19917}"
+	ProjectSection(SolutionItems) = preProject
+		docs\content\index.fsx = docs\content\index.fsx
+		docs\content\tutorial.fsx = docs\content\tutorial.fsx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{7BB491CA-FBEA-44D7-B986-89E150F5E236}"
+	ProjectSection(SolutionItems) = preProject
+		docs\tools\generate.fsx = docs\tools\generate.fsx
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11FC65A6-C4DC-4ED7-A617-576BF2E8AD44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11FC65A6-C4DC-4ED7-A617-576BF2E8AD44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11FC65A6-C4DC-4ED7-A617-576BF2E8AD44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11FC65A6-C4DC-4ED7-A617-576BF2E8AD44}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{642E6C61-5781-4A65-AC92-100A08D19917} = {204CE0ED-3EEA-4417-BC1E-BCA4545EA45D}
+		{7BB491CA-FBEA-44D7-B986-89E150F5E236} = {204CE0ED-3EEA-4417-BC1E-BCA4545EA45D}
+	EndGlobalSection
+EndGlobal

@@ -6,3 +6,4 @@ open Informedica.GenUnits.lib
 
 // Define your library scripting code here
 
+let hello = "Hello World"

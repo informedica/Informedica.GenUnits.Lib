@@ -8,3 +8,4 @@
 #r "System.dll"
 #r "System.Numerics.dll"
 #r "../../../packages/Unquote/lib/net45/Unquote.dll"
+#r "../../../packages/FsCheck/lib/net45/FsCheck.dll"

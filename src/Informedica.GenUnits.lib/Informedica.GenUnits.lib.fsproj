@@ -55,10 +55,7 @@
   </Target>
   -->
   <ItemGroup>
-    <Content Include="InstallationDummyFile.txt">
-      <Paket>True</Paket>
-    </Content>
-    <Compile Include="Library1.fs" />
+    <Compile Include="Utils.fs" />
     <None Include="Script.fsx" />
     <Compile Include="Script3.fsx" />
     <None Include="paket.references" />

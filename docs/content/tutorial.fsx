@@ -1,5 +1,5 @@
 ﻿(*** hide ***)
 #I "../../src/Informedica.GenUnits.Lib/Scripts"
-#load "load-project-debug.fsx"
+#load "load-project-release.fsx"
 
 

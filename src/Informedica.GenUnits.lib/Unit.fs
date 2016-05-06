@@ -268,6 +268,7 @@ module Unit =
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module CombiUnit =
 
+    module BCL = StringBCL
     module UN = Unit
     module MP = UN.Multipliers
 
@@ -374,6 +375,22 @@ module CombiUnit =
         |> Combi
         |> eval
 
+    let toString cu =
+        let abbr = Unit.getAbbreviation >> fst >> Unit.Name.get
+
+        let bigRatToString (v: BigRational) =
+            if v = 1N then "" else v.ToString()
+
+        let v, u, ul = cu |> get
+        let acc = (v |> bigRatToString) + " " + (u |> abbr) |> BCL.trim
+        ul 
+        |> List.fold (fun acc (o, v, u) -> 
+                let v' = v |> bigRatToString
+                let o' = match o with | Times -> "*" | Per -> "/"
+                let u' = u |> abbr
+                acc +
+                if v' = "" then o' + u' else v' + " " + o' + u') acc
+
     type CombiUnit with
         
         static member (*) (cu1, cu2) = calc (*) cu1 cu2
@@ -383,6 +400,7 @@ module CombiUnit =
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]        
 module ValueUnit =
 
+    module UN = Unit
     module CU = CombiUnit
 
     type ValueUnit = ValueUnit of BigRational * CU.CombiUnit
@@ -397,7 +415,28 @@ module ValueUnit =
         let u = CU.calc op u1 u2
         let v = v1 |> CU.toBase u1 |> op <| (v2 |> CU.toBase u2) |> CU.toUnit u
         create v u
-        
+
+    let convertTo cu vu =
+        let v, cu1 = vu |> get
+        let _, u1, ul1 = cu1 |> CU.get
+        let _, u2, ul2 = cu  |> CU.get
+
+        let eq u1 u2 = u1 |> UN.getGroupName = (u2 |> UN.getGroupName)
+
+        let canConvert ul1 ul2 =
+            ul1 |> List.forall2 (fun (o1, _, u1) (o2, _, u2) ->
+                o1 = o2 && u1 |> eq u2
+            ) ul2
+
+        if u1 |> eq u2 && canConvert ul1 ul2 then
+            let v' = v |> CU.toBase cu1 |> CU.toUnit cu
+            (v', cu) |> ValueUnit
+        else failwith "Cannot convert"
+
+    let toString vu =
+        let v, u = vu |> get
+        v.ToString() + " " + (u |> CU.toString)
+
     type ValueUnit with
 
         static member (*) (vu1, vu2) = calc (*) vu1 vu2

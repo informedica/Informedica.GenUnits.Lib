@@ -56,13 +56,19 @@ module TestUnit =
         ] |> List.iter (fun t -> t())
 
 
-
-
 open CombiUnit
 open Unit.Units
 open ValueUnit
 
+module CU = CombiUnit
+module VU = ValueUnit
+
+let toString = CU.toString
+   
+let toString2 = VU.toString
+
 let cu1 = 1N |> withUnit milliGram |> per 1N day
+cu1 |> toString
 let cu2 = 1N |> withUnit day
 let cu3 = 1N |> withUnit weightKg
 let cu5 = (cu1 / cu3) * cu2
@@ -72,7 +78,7 @@ let cu4 = 1N |> withUnit weightGram
 let vu1 = create 100N cu5
 let vu2 = create 3500N cu4
 
-vu1 * vu2
+vu1 * vu2 |> toString2
 
 let cu6 = 1N |> withUnit count |> per 2N day
 let cu7 = 1N |> withUnit milliGram
@@ -80,5 +86,5 @@ let cu7 = 1N |> withUnit milliGram
 let vu3 = create 3N cu6
 let vu4 = create 20N cu7
 
-(vu3 * vu4) * (create 1N cu2)
+(vu3 * vu4) * (create 1N cu2) |> toString2
 

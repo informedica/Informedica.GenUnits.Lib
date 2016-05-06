@@ -356,25 +356,25 @@ module TestUnit =
         ] |> List.iter (fun t -> t())
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-module ValueUnit =
+module CombiUnit =
 
     module MP = Multipliers
     module UN = Unit
 
-    type ValueUnit = 
-    | ValueUnit of BigRational * UN.Unit * (Operator * BigRational * UN.Unit) list
+    type CombiUnit = 
+    | Combi of BigRational * UN.Unit * (Operator * BigRational * UN.Unit) list
     and Operator =
     | Per
     | Times
         
-    let create v u = (v , u, []) |> ValueUnit
+    let create v u = (v , u, []) |> Combi
 
-    let get (ValueUnit(v, u, ul)) = v, u, ul
+    let get (Combi(v, u, ul)) = v, u, ul
 
     let operator op v u vu =
         let v', u', ul = vu |> get
         (v', u', ul @ [(op, v, u)]) 
-        |> ValueUnit
+        |> Combi
 
     let withUnit u v = create v u
 
@@ -392,9 +392,9 @@ module ValueUnit =
             | Per   -> acc / (mp v u)
             | Times -> acc * (mp v u)) (mp v u)
             
-    let toBase vu v = v |> MP.toBase (vu |> getMultiplier)
+    let toBase u v = v |> MP.toBase (u |> getMultiplier)
 
-    let toUnit vu v = v |> MP.toUnit (vu |> getMultiplier)
+    let toUnit u v = v |> MP.toUnit (u |> getMultiplier)
 
     let eval x =
         let _, u, ul = x |> get
@@ -445,7 +445,7 @@ module ValueUnit =
         | [] -> create 1N UN.Units.count
         | x::xs -> 
             let _, _, u = x
-            (1N, u, xs) |> ValueUnit
+            (1N, u, xs) |> Combi
 
     let (|Mult|Div|) op =
         match op with
@@ -453,24 +453,68 @@ module ValueUnit =
         | _ when 1N |> op <| 2N = (1N/2N) -> Div
         | _ -> failwith "Not a valid operator"
 
-    let calc op vu1 vu2 = 
+    let calc op u1 u2 = 
         let op' = 
             match op with
             | Mult -> Times
             | Div  -> Per
-        let v1, u1, ul1 = vu1 |> get
-        let v2, u2, ul2 = vu2 |> get
+        let v1, u1, ul1 = u1 |> get
+        let v2, u2, ul2 = u2 |> get
         (v1, u1, ul1 @ [op', v2, u2] @ ul2) 
-        |> ValueUnit
+        |> Combi
         |> eval
+
+    type CombiUnit with
         
+        static member (*) (cu1, cu2) = calc (*) cu1 cu2
 
-open ValueUnit
+        static member (/) (cu1, cu2) = calc (/) cu1 cu2
+
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]        
+module ValueUnit =
+
+    module CU = CombiUnit
+
+    type ValueUnit = ValueUnit of BigRational * CU.CombiUnit
+
+    let create v u = (v, u) |> ValueUnit
+
+    let get (ValueUnit(v, u)) = v, u
+
+    let calc op vu1 vu2 =
+        let v1, u1 = vu1 |> get
+        let v2, u2 = vu2 |> get
+        let u = CU.calc op u1 u2
+        let v = v1 |> CU.toBase u1 |> op <| (v2 |> CU.toBase u2) |> CU.toUnit u
+        create v u
+        
+    type ValueUnit with
+
+        static member (*) (vu1, vu2) = calc (*) vu1 vu2
+
+        static member (/) (vu1, vu2) = calc (/) vu1 vu2
+
+
+open CombiUnit
 open Unit.Units
+open ValueUnit
 
-let vu = 1N |> withUnit milliGram |> per 2N day
-vu |> getMultiplier
-10N |> toBase vu 
-(1N/8640000N) |> toUnit vu
+let cu1 = 1N |> withUnit milliGram |> per 1N day
+let cu2 = 1N |> withUnit day
+let cu3 = 1N |> withUnit weightKg
+let cu5 = (cu1 / cu3) * cu2
 
+let cu4 = 1N |> withUnit weightGram 
 
+let vu1 = create 100N cu5
+let vu2 = create 3500N cu4
+
+vu1 * vu2
+
+let cu6 = 1N |> withUnit count |> per 2N day
+let cu7 = 1N |> withUnit milliGram
+
+let vu3 = create 3N cu6
+let vu4 = create 20N cu7
+
+(vu3 * vu4) * (create 1N cu2)

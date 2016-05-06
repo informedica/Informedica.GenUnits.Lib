@@ -56,11 +56,10 @@
   -->
   <ItemGroup>
     <Compile Include="Utils.fs" />
-    <None Include="Script.fsx" />
-    <Compile Include="Script3.fsx" />
     <None Include="paket.references" />
     <None Include="Scripts\load-references-release.fsx" />
     <None Include="Scripts\load-project-release.fsx" />
+    <None Include="Scripts\Script1.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

@@ -2,4 +2,3 @@
 #I __SOURCE_DIRECTORY__
 #load "load-references-release.fsx"
 #load "../Utils.fs"
-      "../Script3.fsx"

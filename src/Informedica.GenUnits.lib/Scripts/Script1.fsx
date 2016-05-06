@@ -1,5 +1,4 @@
-﻿#I "./Scripts"
-#load "load-project-release.fsx"
+﻿#load "load-project-release.fsx"
 
 #time
 
@@ -518,3 +517,4 @@ let vu3 = create 3N cu6
 let vu4 = create 20N cu7
 
 (vu3 * vu4) * (create 1N cu2)
+

@@ -1,3 +1,7 @@
+#### 0.2.0-beta - May 12 2016
+* Added fromString to create a value unit from a string
+* Updated the tutorial
+
 #### 0.1.1-beta - May 11 2016
 * First working version
 * Calcultate with units

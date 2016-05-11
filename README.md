@@ -3,9 +3,9 @@ Basic units of measure library enabling calculation with units
 
 ## Build Status
 
-Mono | .NET
----- | ----
-[![Mono CI Build Status](https://img.shields.io/travis/halcwb/GenUnits/master.svg)](https://travis-ci.org/halcwb/GenUnits) | [![.NET Build Status](https://img.shields.io/appveyor/ci/halcwb/GenUnits/master.svg)](https://ci.appveyor.com/project/halcwb/GenUnits)
+Mono | .NET | NuGet|
+---- | ---- | ---- |
+[![Mono CI Build Status](https://img.shields.io/travis/halcwb/GenUnits/master.svg)](https://travis-ci.org/halcwb/GenUnits) | [![.NET Build Status](https://img.shields.io/appveyor/ci/halcwb/GenUnits/master.svg)](https://ci.appveyor.com/project/halcwb/GenUnits) | [![NuGet Status](http://img.shields.io/nuget/v/Informedica.GenUnits.Lib.svg?style=flat)](https://www.nuget.org/packages/Informedica.GenUnits.Lib/)
 
 
 # Background

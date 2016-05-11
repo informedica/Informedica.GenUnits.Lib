@@ -15,7 +15,7 @@ Documentation
   <div class="span6">
     <div class="well well-small" id="nuget">
       The GenUnits library can be <a href="https://nuget.org/packages/GenUnits">installed from NuGet</a>:
-      <pre>PM> Install-Package GenUnits</pre>
+      <pre>PM> Install-Package Informedica.GenUnits.Lib</pre>
     </div>
   </div>
   <div class="span1"></div>

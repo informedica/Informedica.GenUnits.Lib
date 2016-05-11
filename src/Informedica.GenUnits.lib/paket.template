@@ -1,4 +1,8 @@
 type project
+authors
+	halcwb
+description
+	Basic units of measure library enabling calculating with values that have units
 iconUrl
     https://raw.githubusercontent.com/halcwb/GenUnits/master/docs/files/img/logo.png
 licenseUrl

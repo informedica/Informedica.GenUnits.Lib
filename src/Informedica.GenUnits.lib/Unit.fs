@@ -230,7 +230,9 @@ module Unit =
         let hasName s u = 
             let eqs = N.eqs s
             let (n, ns) = getName u
-            n |> eqs || ns |> List.exists eqs
+            let (a, aa) = getAbbreviation u
+            n |> eqs || ns |> List.exists eqs ||
+            a |> eqs || aa |> List.exists eqs
 
         let find succ fail us s = 
             let u =
@@ -268,7 +270,16 @@ module Unit =
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module CombiUnit =
 
-    module BCL = StringBCL
+    [<Literal>] 
+    let mults = "*"
+    [<Literal>] 
+    let divs  = "/"
+    [<Literal>]
+    let empts = ""
+    [<Literal>]
+    let space = " "
+
+    module SBCL = StringBCL
     module UN = Unit
     module MP = UN.Multipliers
 
@@ -393,17 +404,58 @@ module CombiUnit =
         let abbr = Unit.getAbbreviation >> fst >> Unit.Name.get
 
         let bigRatToString (v: BigRational) =
-            if v = 1N then "" else v.ToString()
+            if v = 1N then empts else v.ToString()
 
         let v, u, ul = cu |> get
-        let acc = (v |> bigRatToString) + " " + (u |> abbr) |> BCL.trim
+        let acc = (v |> bigRatToString) + space + (u |> abbr) |> SBCL.trim
         ul 
         |> List.fold (fun acc (o, v, u) -> 
                 let v' = v |> bigRatToString
-                let o' = match o with | Times -> "*" | Per -> "/"
+                let o' = match o with | Times -> mults | Per -> divs
                 let u' = u |> abbr
                 acc +
-                if v' = "" then o' + u' else v' + " " + o' + u') acc
+                if v' = empts then o' + u' else v' + space + o' + u') acc
+
+    let fromString s =
+        let dels = "#"
+
+        let ofs s =
+            match s with
+            | _ when s = mults -> Times
+            | _ when s = divs  -> Per
+            | _ -> failwith "Not a valid operator string"
+
+        let ufs s =
+            match s |> SBCL.split space with
+            | [u] -> 
+                match u |> UN.Units.fromString with
+                | Some (u) -> 1N, u
+                | None     -> failwith "Not a valid unit"
+            | [v;u] -> 
+                let v' = v |> BigRational.Parse
+                match u |> UN.Units.fromString with
+                | Some (u) -> v', u
+                | None     -> failwith "Not a valid unit"
+            | _ -> failwith "Cannot parse string"
+
+        let rec parse ul usl =
+            match usl with
+            | [us] -> 
+                let v, u = us |> ufs
+                (v, u, ul) |> Combi
+            | us::os::rest -> 
+                let v, u = us |> ufs
+                let o = os |> ofs
+                rest |> parse ([ (o, v, u)] @ ul)
+            | _ -> failwith "Cannot parse string list"
+
+        s 
+        |> SBCL.replace mults (dels + mults + dels) 
+        |> SBCL.replace divs  (dels + divs + dels)
+        |> SBCL.split dels
+        |> List.rev
+        |> parse []
+        
 
     type CombiUnit with
         
@@ -419,6 +471,7 @@ module CombiUnit =
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]        
 module ValueUnit =
 
+    module SBCL = StringBCL
     module UN = Unit
     module CU = CombiUnit
 
@@ -455,6 +508,18 @@ module ValueUnit =
     let toString vu =
         let v, u = vu |> get
         v.ToString() + " " + (u |> CU.toString)
+
+    let fromString s =
+        match s |> SBCL.split CU.space with
+        | vs::rest ->
+            let v = vs |> BigRational.Parse
+            let cu = 
+                rest
+                |> String.concat CU.empts
+                |> CU.fromString
+            (v, cu) |> ValueUnit
+        | _ -> failwith "Cannot parse string"
+
 
     type ValueUnit with
 

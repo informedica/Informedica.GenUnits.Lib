@@ -2,6 +2,8 @@
 #I "../../src/Informedica.GenUnits.Lib/Scripts"
 #load "load-project-release.fsx"
 
+#time
+
 (**
 Create a `ValueUnit`
 *)
@@ -57,3 +59,20 @@ Output:
 > val it : string = "7 g/week"
 
 *)
+
+(** 
+## Create a combi unit directly from a string
+
+*)
+
+"mg/kg/2 day" |> CU.fromString
+
+(** 
+
+And a value with a unit
+
+*)
+
+"20 mg/kg/2 day" |> VU.fromString
+tot |> VU.convertTo ``gram/week`` |> VU.toString |> VU.fromString
+``2 dd`` |> VU.toString |> VU.fromString

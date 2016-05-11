@@ -3,6 +3,8 @@
 
 module StringBCL =
 
+    open System
+
     let toString s = s.ToString()
 
     let empty (s: string) = System.String.IsNullOrWhiteSpace(s)
@@ -35,6 +37,10 @@ module StringBCL =
     let isLetter s = List.exists (fun s' -> s' = s) letters
 
     let equalsCapInsens s1 s2 = s1 |> toLower |> trim = (s2 |> toLower |> trim) 
+
+    let replace (olds: string) news (s: string) = s.Replace(olds, news) 
+
+    let split (dels: string) (s: string) = s.Split(dels.ToCharArray()) |> Array.toList
 
 
 module Utils =  

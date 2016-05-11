@@ -233,9 +233,11 @@ Target "NuGet" (fun _ ->
 )
 
 Target "PublishNuget" (fun _ ->
+    let key = getBuildParam "NugetKey"
     Paket.Push(fun p -> 
         { p with
-            WorkingDir = "bin" })
+            WorkingDir = "bin"
+            ApiKey = key })
 )
 
 

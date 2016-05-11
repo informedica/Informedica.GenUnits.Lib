@@ -135,6 +135,7 @@ Target "AssemblyInfo" (fun _ ->
     let getAssemblyInfoAttributes projectName =
         [ Attribute.Title (projectName)
           Attribute.Product project
+          Attribute.Company authors
           Attribute.Description summary
           Attribute.Version release.AssemblyVersion
           Attribute.FileVersion release.AssemblyVersion ]
@@ -233,9 +234,11 @@ Target "NuGet" (fun _ ->
 )
 
 Target "PublishNuget" (fun _ ->
+    let key = getBuildParam "NugetKey"
     Paket.Push(fun p -> 
         { p with
-            WorkingDir = "bin" })
+            WorkingDir = "bin"
+            ApiKey = key })
 )
 
 

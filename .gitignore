@@ -36,6 +36,7 @@ publishnuget.cmd
 !paket.dependencies
 !paket.lock
 !paket.references
+!paket.template
 
 # Add yml files to ci on appveyor and travis
 !appveyor.yml

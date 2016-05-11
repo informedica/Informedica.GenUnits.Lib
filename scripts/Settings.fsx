@@ -16,14 +16,14 @@ let project = "GenUnits"
 
 // Short summary of the project
 // (used as description in AssemblyInfo and as a short summary for NuGet package)
-let summary = ""
+let summary = "Basic units of measure library enabling calculating with values that have units"
 
 // Longer description of the project
 // (used as a description for NuGet package; line breaks are automatically cleaned up)
 let description = ""
 
 // List of author names (for NuGet package)
-let authors = [ "halcwb" ]
+let authors = "halcwb"
 
 // Tags for your project (for NuGet package)
 let tags = "Informedica"

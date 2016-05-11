@@ -21,6 +21,10 @@
 !*.cmd
 !*.sh
 
+#ignore release and nuget publish command files
+release.cmd
+publishnuget.cmd
+
 # Add proc file
 !Procfile
 

@@ -23,7 +23,7 @@ let summary = ""
 let description = ""
 
 // List of author names (for NuGet package)
-let authors = [ "halcwb" ]
+let authors = "halcwb"
 
 // Tags for your project (for NuGet package)
 let tags = "Informedica"

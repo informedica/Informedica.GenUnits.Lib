@@ -143,7 +143,7 @@ module Unit =
         if gr1 = gr2 then u1 |> toBase >> (u2 |> toUnit) |> succ
         else (gr1, gr2) |> CannotConvert |> fail
 
-    let eqGroup s u = let (N.Name g) = u |> getGroupName in g = s
+    let eqGroup u1 u2 = let g = u1|> getGroupName in u2 |> getGroupName = g
 
     module Units =
 
@@ -307,6 +307,13 @@ module CombiUnit =
 
     let toUnit u v = v |> MP.toUnit (u |> getMultiplier)
 
+    let eqGroup cu1 cu2 =
+        let _, u1, ul1 = cu1 |> get
+        let _, u2, ul2 = cu2 |> get
+        u1 |> UN.eqGroup u2 && 
+        ul1 
+        |> List.forall2 (fun (_, _, u1) (_, _, u2) -> u1 |> UN.eqGroup u2) ul2
+
     let eval x =
         let _, u, ul = x |> get
 
@@ -324,7 +331,7 @@ module CombiUnit =
             let op1, v1, u1 = x1
             let op2, v2, u2 = x2
             let opeq = op1 = op2
-            let greq = u1 |> UN.getGroupName = (u2 |> UN.getGroupName)
+            let greq = u1 |> UN.eqGroup u2
             (opeq |> not) && greq 
 
         let rec simplify acc list = 
@@ -332,7 +339,7 @@ module CombiUnit =
                 xs 
                 |> List.filter(fun x -> 
                     let (_, _, u) = x
-                    u |> UN.eqGroup UN.Units.countGroup |> not) 
+                    u |> UN.getGroupName |> UN.Name.get = UN.Units.countGroup |> not) 
                 
             let rec remove i l =
                 match i, l with
@@ -358,22 +365,29 @@ module CombiUnit =
             let _, _, u = x
             (1N, u, xs) |> Combi
 
-    let (|Mult|Div|) op =
+    let (|Mult|Div|Add|Subtr|) op =
         match op with
         | _ when 1N |> op <| 2N = 2N      -> Mult
         | _ when 1N |> op <| 2N = (1N/2N) -> Div
+        | _ when 1N |> op <| 2N = 3N      -> Add
+        | _ when 1N |> op <| 2N = -1N     -> Subtr
         | _ -> failwith "Not a valid operator"
 
-    let calc op u1 u2 = 
+    let calc op cu1 cu2 = 
         let op' = 
             match op with
             | Mult -> Times
             | Div  -> Per
-        let v1, u1, ul1 = u1 |> get
-        let v2, u2, ul2 = u2 |> get
-        (v1, u1, ul1 @ [op', v2, u2] @ ul2) 
-        |> Combi
-        |> eval
+        let _, u1, ul1 = cu1 |> get
+        let _, u2, ul2 = cu2 |> get
+        match op with
+        | Mult | Div ->
+            (1N, u1, ul1 @ [op', 1N, u2] @ ul2) 
+            |> Combi
+            |> eval
+        | Add | Subtr -> 
+            if cu1 |> eqGroup cu2 then cu2
+            else failwith "Cannot add units with different unit groups"
 
     let toString cu =
         let abbr = Unit.getAbbreviation >> fst >> Unit.Name.get
@@ -396,6 +410,11 @@ module CombiUnit =
         static member (*) (cu1, cu2) = calc (*) cu1 cu2
 
         static member (/) (cu1, cu2) = calc (/) cu1 cu2
+
+        static member (+) (cu1, cu2) = calc (+) cu1 cu2
+
+        static member (-) (cu1, cu2) = calc (-) cu1 cu2
+
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]        
 module ValueUnit =
@@ -442,3 +461,7 @@ module ValueUnit =
         static member (*) (vu1, vu2) = calc (*) vu1 vu2
 
         static member (/) (vu1, vu2) = calc (/) vu1 vu2
+
+        static member (+) (vu1, vu2) = calc (+) vu1 vu2
+
+        static member (-) (vu1, vu2) = calc (-) vu1 vu2

@@ -1,3 +1,8 @@
+#### 0.3.0-beta - May 13 2016
+* Added specific Api
+* Added simple eval to evaluate expressions with value units
+* Updated the tutorial
+
 #### 0.2.0-beta - May 12 2016
 * Added fromString to create a value unit from a string
 * Updated the tutorial

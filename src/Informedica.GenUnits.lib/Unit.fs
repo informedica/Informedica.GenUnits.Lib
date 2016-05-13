@@ -147,6 +147,7 @@ module Unit =
 
     module Units =
 
+        module C = Constants
         module SBCL = StringBCL
         module N = Name
 
@@ -159,16 +160,16 @@ module Unit =
             create id (fun m -> m |> raiseExc) g' n' a' m
 
         [<Literal>]
-        let generalGroup = "General"
+        let generalGroup = C.generalGroup
 
         [<Literal>]
-        let countGroup = "Count"
+        let countGroup = C.countGroup
         let createCount = create' countGroup
         let count =  createCount "Times" "X" MP.one  
         let countUnits = [count] 
 
         [<Literal>]
-        let massGroup = "Mass"
+        let massGroup = C.massGroup
         let createMass = create' massGroup
         let kiloGram  = createMass "KiloGram"  "kg"    MP.kilo
         let gram      = createMass "Gram"      "g"     MP.one
@@ -178,27 +179,27 @@ module Unit =
         let massUnits = [kiloGram;gram;milliGram;microGram;nanoGram]
 
         [<Literal>]
-        let molarGroup = "Molar"
+        let molarGroup = C.molarGroup
         let createMolar = create' molarGroup
         let mol      = createMass "Mol"      "mol"  MP.one  
         let milliMol = createMass "MilliMol" "mmol" MP.milli  
         let molarUnits = [mol;milliMol] 
 
         [<Literal>]
-        let weightGroup = "Weight"
+        let weightGroup = C.weightGroup
         let createWeight = create' weightGroup
         let weightKg   = createWeight "KiloGram" "kg" MP.kilo 
         let weightGram = createWeight "Gram"     "g"  MP.one
         let weightUnits = [weightKg;weightGram] 
 
         [<Literal>]
-        let bsaGroup = "BSA"
+        let bsaGroup = C.bsaGroup
         let createBSA = create' bsaGroup
         let bsa = createBSA "SquareMeter" "m^s" MP.kilo 
         let bsaUnits = [bsa]
 
         [<Literal>]
-        let volumeGroup = "volumeUnits"
+        let volumeGroup = C.volumeGroup
         let createVolume = create' volumeGroup
         let liter      = createVolume "Liter"      "l"   MP.one
         let deciLiter  = createVolume "DeciLiter"  "dl"  MP.deci 
@@ -207,7 +208,7 @@ module Unit =
         let volumeUnits = [liter;deciLiter;milliLiter;microLiter]
 
         [<Literal>]
-        let timeGroup = "Time"
+        let timeGroup = C.timeGroup
         let createTime = create' timeGroup
         let second = createTime "Second" "sec"  MP.one 
         let minute = createTime "Minute" "min"  MP.minute
@@ -219,7 +220,7 @@ module Unit =
         let timeUnits = [second;minute;hour;day;week;month;year] 
 
         [<Literal>]
-        let distanceGroup = "Distance"
+        let distanceGroup = C.distanceGroup
         let createDistance = create' distanceGroup
         let meter      = createDistance "Meter"      "m"  MP.one 
         let centimeter = createDistance "CentiMeter" "cm" MP.centi 
@@ -270,14 +271,16 @@ module Unit =
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module CombiUnit =
 
+    module C = Constants
+
     [<Literal>] 
-    let mults = "*"
+    let mults = C.mults
     [<Literal>] 
-    let divs  = "/"
+    let divs  = C.divs
     [<Literal>]
-    let empts = ""
+    let empts = C.empts
     [<Literal>]
-    let space = " "
+    let space = C.space
 
     module SBCL = StringBCL
     module UN = Unit
@@ -389,6 +392,7 @@ module CombiUnit =
             match op with
             | Mult -> Times
             | Div  -> Per
+            | _ -> failwith "Not a valid unit operator"
         let _, u1, ul1 = cu1 |> get
         let _, u2, ul2 = cu2 |> get
         match op with
@@ -488,22 +492,27 @@ module ValueUnit =
         let v = v1 |> CU.toBase u1 |> op <| (v2 |> CU.toBase u2) |> CU.toUnit u
         create v u
 
-    let convertTo cu vu =
+    let canConvert cu vu =
         let v, cu1 = vu |> get
         let _, u1, ul1 = cu1 |> CU.get
         let _, u2, ul2 = cu  |> CU.get
 
         let eq u1 u2 = u1 |> UN.getGroupName = (u2 |> UN.getGroupName)
 
-        let canConvert ul1 ul2 =
+        let canConvUl ul1 ul2 =
             ul1 |> List.forall2 (fun (o1, _, u1) (o2, _, u2) ->
                 o1 = o2 && u1 |> eq u2
             ) ul2
 
-        if u1 |> eq u2 && canConvert ul1 ul2 then
-            let v' = v |> CU.toBase cu1 |> CU.toUnit cu
-            (v', cu) |> ValueUnit
-        else failwith "Cannot convert"
+        u1 |> eq u2 && canConvUl ul1 ul2     
+
+    let convertTo cu vu =
+        let v, cu1 = vu |> get
+        let _, u1, ul1 = cu1 |> CU.get
+        let _, u2, ul2 = cu  |> CU.get
+
+        let v' = v |> CU.toBase cu1 |> CU.toUnit cu
+        (v', cu) |> ValueUnit
 
     let toString vu =
         let v, u = vu |> get

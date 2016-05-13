@@ -55,12 +55,15 @@
   </Target>
   -->
   <ItemGroup>
+    <Compile Include="Constants.fs" />
     <Compile Include="Utils.fs" />
     <Compile Include="Unit.fs" />
+    <Compile Include="Api.fs" />
     <None Include="paket.references" />
     <None Include="Scripts\load-references-release.fsx" />
     <None Include="Scripts\load-project-release.fsx" />
     <None Include="Scripts\Script1.fsx" />
+    <Compile Include="AssemblyInfo.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

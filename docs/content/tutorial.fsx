@@ -76,3 +76,18 @@ And a value with a unit
 "20 mg/kg/2 day" |> VU.fromString
 tot |> VU.convertTo ``gram/week`` |> VU.toString |> VU.fromString
 ``2 dd`` |> VU.toString |> VU.fromString
+
+(** 
+## Evaluate an expression
+
+*)
+
+"2 mg * 3 X/day" |> Api.eval
+
+let conc = "200 mg / 50 ml" |> Api.eval
+let rate = "2 mL/hour"      |> Api.eval
+let dose = 
+    rate + " * " + conc + " / 60 kg_weight" 
+    |> Api.eval
+    |> Api.convert "mcg/kg_weight/min"
+

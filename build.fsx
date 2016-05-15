@@ -105,9 +105,9 @@ Target "Integrate" (fun _ ->
         failwith "Working copy is not clean, cannot integrate"
     else
         // Get the latest mono build
-        let lastTravisBuild   = Travis.getLatestBuild project
+        let lastTravisBuild   = Travis.getLatestBuild gitName
         // Get the latest .Net build
-        let lastAppVeyorBuild = AppVeyor.getLatestBuild project
+        let lastAppVeyorBuild = AppVeyor.getLatestBuild gitName
 
         // Check whether the builds passed
         match lastTravisBuild, lastAppVeyorBuild with

@@ -32,7 +32,7 @@ module Unit =
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Name = 
 
-        module SBCL = StringBCL
+        module SBCL = Informedica.GenUtils.Lib.BCL.String
 
         type Name = Name of string
 
@@ -64,22 +64,6 @@ module Unit =
         let toLower = get >> SBCL.toLower >> Name
 
         let capitalize = get >> SBCL.capitalize >> Name
-
-        module NameTests =
-            
-            open Swensen.Unquote
-
-            // Name cannot be created with an empty or null string
-            let succ _ = false
-            let fail _ = true
-            test <@ create succ fail ""  @>
-            test <@ create succ fail null @>
-
-            // Name should be at least one character long
-            // and smaller than 30 characters
-            test <@ create (fun _ -> true) (fun _ -> false) "1" @>
-            test <@ "s" |> String.replicate 31 |> create (fun _ -> false) (fun _ -> true) @>
-            test <@ "s" |> String.replicate 30 |> create (fun _ -> true) (fun _ -> false) @>
 
     module N = Name
 
@@ -148,7 +132,7 @@ module Unit =
     module Units =
 
         module C = Constants
-        module SBCL = StringBCL
+        module SBCL = Informedica.GenUtils.Lib.BCL.String
         module N = Name
 
         let name = N.create id (fun m -> m |> N.raiseExc)
@@ -282,7 +266,7 @@ module CombiUnit =
     [<Literal>]
     let space = C.space
 
-    module SBCL = StringBCL
+    module SBCL = Informedica.GenUtils.Lib.BCL.String
     module UN = Unit
     module MP = UN.Multipliers
 
@@ -475,7 +459,7 @@ module CombiUnit =
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]        
 module ValueUnit =
 
-    module SBCL = StringBCL
+    module SBCL = Informedica.GenUtils.Lib.BCL.String
     module UN = Unit
     module CU = CombiUnit
 

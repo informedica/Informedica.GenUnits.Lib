@@ -28,8 +28,15 @@ This example demonstrates using a function defined in this sample library.
 
 *)
 
+module API = Informedica.GenUnits.Lib.Api
+
+API.eval "20 mg/ml * 10 ml"
 
 (**
+Will return:
+
+> val it : string = "200 mg"
+
 Some more info
 
 Samples & documentation

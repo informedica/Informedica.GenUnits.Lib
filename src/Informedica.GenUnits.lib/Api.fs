@@ -3,7 +3,7 @@
 module Api =
 
     module C = Constants
-    module SBCL = StringBCL
+    module SBCL = Informedica.GenUtils.Lib.BCL.String
     module CU = CombiUnit
     module VU = ValueUnit
     

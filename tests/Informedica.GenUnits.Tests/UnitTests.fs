@@ -40,3 +40,37 @@ type Config () =
     member x.Setup () = 
 
         Arb.register<Generators.MyGenerators>() |> ignore
+
+module UnitTests =
+    
+        module NameTests =
+            
+            module N = Informedica.GenUnits.Lib.Unit.Name     
+            
+            let create = N.create       
+
+            type ``Given an empty or null string`` () =                    
+                
+                [<Test>]
+                member x.``Name cannot be created`` () =
+                    let succ _ = false
+                    let fail _ = true
+                    let create = create succ fail
+                    test <@ create ""  @>
+                    test <@ create null @>
+
+            type ``Given a string`` () =
+
+                [<Property>]
+                member x.``Name should be at least one character long`` () =
+                    (fun s -> 
+                        let succ _ = s |> String.length >= 1
+                        let fail _ = true
+                        s |> create succ fail )
+
+                [<Property>]
+                member x.``Name should be smaller than 30 characters`` () =
+                    (fun s -> 
+                        let succ _ = s |> String.length <= 30
+                        let fail _ = true
+                        s |> create succ fail )

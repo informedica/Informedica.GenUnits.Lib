@@ -65,22 +65,6 @@ module Unit =
 
         let capitalize = get >> SBCL.capitalize >> Name
 
-        module NameTests =
-            
-            open Swensen.Unquote
-
-            // Name cannot be created with an empty or null string
-            let succ _ = false
-            let fail _ = true
-            test <@ create succ fail ""  @>
-            test <@ create succ fail null @>
-
-            // Name should be at least one character long
-            // and smaller than 30 characters
-            test <@ create (fun _ -> true) (fun _ -> false) "1" @>
-            test <@ "s" |> String.replicate 31 |> create (fun _ -> false) (fun _ -> true) @>
-            test <@ "s" |> String.replicate 30 |> create (fun _ -> true) (fun _ -> false) @>
-
     module N = Name
 
     type Message =

@@ -32,7 +32,7 @@ module Unit =
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Name = 
 
-        module SBCL = StringBCL
+        module SBCL = Informedica.GenUtils.Lib.BCL.String
 
         type Name = Name of string
 
@@ -132,7 +132,7 @@ module Unit =
     module Units =
 
         module C = Constants
-        module SBCL = StringBCL
+        module SBCL = Informedica.GenUtils.Lib.BCL.String
         module N = Name
 
         let name = N.create id (fun m -> m |> N.raiseExc)
@@ -266,7 +266,7 @@ module CombiUnit =
     [<Literal>]
     let space = C.space
 
-    module SBCL = StringBCL
+    module SBCL = Informedica.GenUtils.Lib.BCL.String
     module UN = Unit
     module MP = UN.Multipliers
 
@@ -459,7 +459,7 @@ module CombiUnit =
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]        
 module ValueUnit =
 
-    module SBCL = StringBCL
+    module SBCL = Informedica.GenUtils.Lib.BCL.String
     module UN = Unit
     module CU = CombiUnit
 

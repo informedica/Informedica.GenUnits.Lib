@@ -1,3 +1,8 @@
+#### 0.3.1-beta - May 15 2016
+* Added tests
+* Removed dependencies on FsCheck and Unquote
+* Added utils lib dependency
+
 #### 0.3.0-beta - May 13 2016
 * Added specific Api
 * Added simple eval to evaluate expressions with value units

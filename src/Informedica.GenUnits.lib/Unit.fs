@@ -66,6 +66,8 @@ module Unit =
 
         let capitalize = get >> SBCL.capitalize >> Name
 
+        let toString (Name n) = n
+
     module N = Name
 
     type Message =
@@ -210,6 +212,11 @@ module Unit =
 
         let units = [countUnits;massUnits;molarUnits;weightUnits;bsaUnits;volumeUnits;timeUnits;distanceUnits]
 
+        let isGroup gr u = u |> getGroupName |> N.eqs gr
+        let isTime = isGroup timeGroup
+        let isVolume = isGroup volumeGroup
+        let isAdjust u = u |> isGroup weightGroup || (u |> isGroup bsaGroup)
+
         let hasName s u = 
             let eqs = N.eqs s
             let (n, ns) = getName u
@@ -217,11 +224,13 @@ module Unit =
             n |> eqs || ns |> List.exists eqs ||
             a |> eqs || aa |> List.exists eqs
 
-        let find succ fail us s = 
+        let find succ fail us g s = 
             let u =
                 us 
                 |> List.collect id
                 |> List.tryFind (hasName s)
+                |> Option.bind (fun u -> if u |> isGroup g then Some u else None)
+
             match u with 
             | Some u -> u |> succ
             | None   -> s |> UnitNotFound |> fail
@@ -232,8 +241,8 @@ module Unit =
         let adjustFromString succ fail   = find' [weightUnits;bsaUnits] succ fail
         let timeFromString succ fail     = find' [timeUnits] succ fail
 
-        let fromString s =
-            match s |> find Some (fun _ -> None) units with
+        let fromString s g =
+            match s |> find Some (fun _ -> None) units g with
             | Some(u) -> u |> Some
             | None -> 
                 let name = N.create Some (fun _ -> None)
@@ -245,8 +254,4 @@ module Unit =
                     create Some (fun _ -> None) g' n' a' MP.one
                 | _ -> None
 
-        let isGroup gr u = u |> getGroupName |> N.eqs gr
-        let isTime = isGroup timeGroup
-        let isVolume = isGroup volumeGroup
-        let isAdjust u = u |> isGroup weightGroup || (u |> isGroup bsaGroup)
          

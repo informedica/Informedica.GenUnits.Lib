@@ -28,8 +28,8 @@ Print out the *value units*
 (** 
 Output:
 
-> val it : string = "500 mg"
-> val it : string = "2 X/day"
+> val it : string = "500 mg(Mass)"
+> val it : string = "2 X(Count)/day(Time)"
 
 *)
 
@@ -43,7 +43,7 @@ tot |> VU.toString
 (** 
 Output:
 
- > val it : string = "1000 mg/day"
+ > val it : string = "1000 mg(Mass)/day(Time)"
 
 *)
 
@@ -57,7 +57,7 @@ tot |> VU.convertTo ``gram/week`` |> VU.toString
 (** 
 Output:
 
-> val it : string = "7 g/week"
+> val it : string = "7 g(Mass)/week(Time)"
 
 *)
 
@@ -66,7 +66,7 @@ Output:
 
 *)
 
-"mg/kg/2 day" |> CU.fromString
+"mg(Mass)/kg(Weight)/2 day(Time)" |> CU.fromString
 
 (** 
 
@@ -74,7 +74,7 @@ And a value with a unit
 
 *)
 
-"20 mg/kg/2 day" |> VU.fromString
+"20 mg(Mass)/kg(Weight)/2 day(Time)" |> VU.fromString
 tot |> VU.convertTo ``gram/week`` |> VU.toString |> VU.fromString
 ``2 dd`` |> VU.toString |> VU.fromString
 
@@ -83,14 +83,24 @@ tot |> VU.convertTo ``gram/week`` |> VU.toString |> VU.fromString
 
 *)
 
-"2 mg * 3 X/day" |> Api.eval
+"2 mg(Mass) * 3 X(Count)/day(Time)" |> Api.eval
 
-let conc = "200 mg / 50 ml" |> Api.eval
-let rate = "2 mL/hour"      |> Api.eval
+let conc = "200 mg(Mass) / 50 ml(Volume)" |> Api.eval
+let rate = "2 mL(Mass)/hour(Time)"      |> Api.eval
 let dose = 
-    rate + " * " + conc + " / 60 kg_weight" 
+    rate + " * " + conc + " / 60 kg(Weight)" 
     |> Api.eval
-    |> Api.convert "mcg/kg_weight/min"
+    |> Api.convert "mcg(Mass)/kg(Weight)/min(Time)"
+
+
+(** 
+
+> val it : string = "6 mass(Mass)/time(Time)" </br>
+> val conc : string = "4 mass(Mass)/volume(Volume)" </br>
+> val rate : string = "2 mass(Mass)/time(Time)" </br>
+> val dose : string = "2/15 mass(Mass)/weight(Weight)/time(Time)" </br>
+
+*)
 
 (** 
 ## Calculating with Unit Groups
@@ -119,76 +129,77 @@ cg |> UG.getUnits
 
 (** Results in: 
 
-> kg/kg/sec </br>
-> kg/kg/min </br>
-> kg/kg/hr </br>
-> kg/kg/day </br>
-> kg/kg/week </br>
-> kg/kg/mo </br>
-> kg/kg/yr </br>
-> kg/g/sec </br>
-> kg/g/min </br>
-> kg/g/hr </br>
-> kg/g/day </br>
-> kg/g/week </br>
-> kg/g/mo </br>
-> kg/g/yr </br>
-> g/kg/sec </br>
-> g/kg/min </br>
-> g/kg/hr </br>
-> g/kg/day </br>
-> g/kg/week </br>
-> g/kg/mo </br>
-> g/kg/yr </br>
-> g/g/sec </br>
-> g/g/min </br>
-> g/g/hr </br>
-> g/g/day </br>
-> g/g/week </br>
-> g/g/mo </br>
-> g/g/yr </br>
-> mg/kg/sec </br>
-> mg/kg/min </br>
-> mg/kg/hr </br>
-> mg/kg/day </br>
-> mg/kg/week </br>
-> mg/kg/mo </br>
-> mg/kg/yr </br>
-> mg/g/sec </br>
-> mg/g/min </br>
-> mg/g/hr </br>
-> mg/g/day </br>
-> mg/g/week </br>
-> mg/g/mo </br>
-> mg/g/yr </br>
-> mcg/kg/sec </br>
-> mcg/kg/min </br>
-> mcg/kg/hr </br>
-> mcg/kg/day </br>
-> mcg/kg/week </br>
-> mcg/kg/mo </br>
-> mcg/kg/yr </br>
-> mcg/g/sec </br>
-> mcg/g/min </br>
-> mcg/g/hr </br>
-> mcg/g/day </br>
-> mcg/g/week </br>
-> mcg/g/mo </br>
-> mcg/g/yr </br>
-> nanog/kg/sec </br>
-> nanog/kg/min </br>
-> nanog/kg/hr </br>
-> nanog/kg/day </br>
-> nanog/kg/week </br>
-> nanog/kg/mo </br>
-> nanog/kg/yr </br>
-> nanog/g/sec </br>
-> nanog/g/min </br>
-> nanog/g/hr </br>
-> nanog/g/day </br>
-> nanog/g/week </br>
-> nanog/g/mo </br>
-> nanog/g/yr </br>
+> 
+> kg(Mass)/kg(Weight)/sec(Time) </br>
+> kg(Mass)/kg(Weight)/min(Time) </br>
+> kg(Mass)/kg(Weight)/hr(Time) </br>
+> kg(Mass)/kg(Weight)/day(Time) </br>
+> kg(Mass)/kg(Weight)/week(Time) </br>
+> kg(Mass)/kg(Weight)/mo(Time) </br>
+> kg(Mass)/kg(Weight)/yr(Time) </br>
+> kg(Mass)/g(Weight)/sec(Time) </br>
+> kg(Mass)/g(Weight)/min(Time) </br>
+> kg(Mass)/g(Weight)/hr(Time) </br>
+> kg(Mass)/g(Weight)/day(Time) </br>
+> kg(Mass)/g(Weight)/week(Time) </br>
+> kg(Mass)/g(Weight)/mo(Time) </br>
+> kg(Mass)/g(Weight)/yr(Time) </br>
+> g(Mass)/kg(Weight)/sec(Time) </br>
+> g(Mass)/kg(Weight)/min(Time) </br>
+> g(Mass)/kg(Weight)/hr(Time) </br>
+> g(Mass)/kg(Weight)/day(Time) </br>
+> g(Mass)/kg(Weight)/week(Time) </br>
+> g(Mass)/kg(Weight)/mo(Time) </br>
+> g(Mass)/kg(Weight)/yr(Time) </br>
+> g(Mass)/g(Weight)/sec(Time) </br>
+> g(Mass)/g(Weight)/min(Time) </br>
+> g(Mass)/g(Weight)/hr(Time) </br>
+> g(Mass)/g(Weight)/day(Time) </br>
+> g(Mass)/g(Weight)/week(Time) </br>
+> g(Mass)/g(Weight)/mo(Time) </br>
+> g(Mass)/g(Weight)/yr(Time) </br>
+> mg(Mass)/kg(Weight)/sec(Time) </br>
+> mg(Mass)/kg(Weight)/min(Time) </br>
+> mg(Mass)/kg(Weight)/hr(Time) </br>
+> mg(Mass)/kg(Weight)/day(Time) </br>
+> mg(Mass)/kg(Weight)/week(Time) </br>
+> mg(Mass)/kg(Weight)/mo(Time) </br>
+> mg(Mass)/kg(Weight)/yr(Time) </br>
+> mg(Mass)/g(Weight)/sec(Time) </br>
+> mg(Mass)/g(Weight)/min(Time) </br>
+> mg(Mass)/g(Weight)/hr(Time) </br>
+> mg(Mass)/g(Weight)/day(Time) </br>
+> mg(Mass)/g(Weight)/week(Time) </br>
+> mg(Mass)/g(Weight)/mo(Time) </br>
+> mg(Mass)/g(Weight)/yr(Time) </br>
+> mcg(Mass)/kg(Weight)/sec(Time) </br>
+> mcg(Mass)/kg(Weight)/min(Time) </br>
+> mcg(Mass)/kg(Weight)/hr(Time) </br>
+> mcg(Mass)/kg(Weight)/day(Time) </br>
+> mcg(Mass)/kg(Weight)/week(Time) </br>
+> mcg(Mass)/kg(Weight)/mo(Time) </br>
+> mcg(Mass)/kg(Weight)/yr(Time) </br>
+> mcg(Mass)/g(Weight)/sec(Time) </br>
+> mcg(Mass)/g(Weight)/min(Time) </br>
+> mcg(Mass)/g(Weight)/hr(Time) </br>
+> mcg(Mass)/g(Weight)/day(Time) </br>
+> mcg(Mass)/g(Weight)/week(Time) </br>
+> mcg(Mass)/g(Weight)/mo(Time) </br>
+> mcg(Mass)/g(Weight)/yr(Time) </br>
+> nanog(Mass)/kg(Weight)/sec(Time) </br>
+> nanog(Mass)/kg(Weight)/min(Time) </br>
+> nanog(Mass)/kg(Weight)/hr(Time) </br>
+> nanog(Mass)/kg(Weight)/day(Time) </br>
+> nanog(Mass)/kg(Weight)/week(Time) </br>
+> nanog(Mass)/kg(Weight)/mo(Time) </br>
+> nanog(Mass)/kg(Weight)/yr(Time) </br>
+> nanog(Mass)/g(Weight)/sec(Time) </br>
+> nanog(Mass)/g(Weight)/min(Time) </br>
+> nanog(Mass)/g(Weight)/hr(Time) </br>
+> nanog(Mass)/g(Weight)/day(Time) </br>
+> nanog(Mass)/g(Weight)/week(Time) </br>
+> nanog(Mass)/g(Weight)/mo(Time) </br>
+> nanog(Mass)/g(Weight)/yr(Time) </br>
 
 *)
 
@@ -198,12 +209,12 @@ When a unit is 'unknown', i.e. not defined in the library, a special unit group 
 
 *)
 
-"Tablet" 
+"tablet(Shape)" 
 |> CU.fromString
 
 (** 
 
-> val it : CombiUnit.CombiUnit = Combi (1N,{Group = Name "Tablet";
+> val it : CombiUnit.CombiUnit = Combi (1N,{Group = Name "Shape";
 >                                           Name = (Name "tablet", []);
 >                                           Abbreviation = (Name "tablet", []);
 >                                           Multiplier = 1N;},[])

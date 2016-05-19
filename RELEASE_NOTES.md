@@ -1,7 +1,8 @@
-#### 0.4.0-beta - May 15 2016
+#### 0.4.0-beta - May 19 2016
 * Added possibility to calculate with unit groups
 * Convert a unit group to all possible units
 * Removed general group, instead create special group with multiplier 1 if not an existing unit
+* Changed toString and fromString to specify group name
 
 #### 0.3.1-beta - May 15 2016
 * Added tests

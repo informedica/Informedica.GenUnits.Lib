@@ -19,6 +19,7 @@ module CombiUnit =
     module SBCL = Informedica.GenUtils.Lib.BCL.String
     module UN = Unit
     module MP = UN.Multipliers
+    module NM = UN.Name
 
     type CombiUnit = 
     | Combi of BigRational * UN.Unit * (Operator * BigRational * UN.Unit) list
@@ -140,22 +141,28 @@ module CombiUnit =
 
     let toString cu =
         let abbr = Unit.getAbbreviation >> fst >> Unit.Name.get
+        let gr u = u |> Unit.getGroupName |> NM.toString
+        let toStr u = (u |> abbr) + "(" + (u |> gr) + ")"
 
         let bigRatToString (v: BigRational) =
             if v = 1N then empts else v.ToString()
 
         let v, u, ul = cu |> get
-        let acc = (v |> bigRatToString) + space + (u |> abbr) |> SBCL.trim
+        let acc = (v |> bigRatToString) + space + (u |> toStr) |> String.trim
         ul 
         |> List.fold (fun acc (o, v, u) -> 
                 let v' = v |> bigRatToString
                 let o' = match o with | Times -> mults | Per -> divs
-                let u' = u |> abbr
+                let u' = u |> toStr
                 acc +
                 if v' = empts then o' + u' else v' + space + o' + u') acc
 
     let fromString s =
         let dels = "#"
+        let getUnitAndGroup ug = 
+            match ug |> String.replace ")" "" |> String.split "(" with
+            | [u;g] -> u, g
+            | _ -> sprintf "Could not parse unit from string: %s" ug |> failwith
 
         let ofs s =
             match s with
@@ -165,13 +172,15 @@ module CombiUnit =
 
         let ufs s =
             match s |> SBCL.split space with
-            | [u] -> 
-                match u |> UN.Units.fromString with
+            | [ug] ->
+                let u, g = ug |> getUnitAndGroup 
+                match u |> UN.Units.fromString g with
                 | Some (u) -> 1N, u
                 | None     -> failwith "Not a valid unit"
-            | [v;u] -> 
+            | [v;ug] -> 
+                let u, g = ug |> getUnitAndGroup 
                 let v' = v |> BigRational.Parse
-                match u |> UN.Units.fromString with
+                match u |> UN.Units.fromString g with
                 | Some (u) -> v', u
                 | None     -> failwith "Not a valid unit"
             | _ -> failwith "Cannot parse string"

@@ -98,7 +98,7 @@ let dose =
 > val it : string = "6 mass(Mass)/time(Time)" </br>
 > val conc : string = "4 mass(Mass)/volume(Volume)" </br>
 > val rate : string = "2 mass(Mass)/time(Time)" </br>
-> val dose : string = "2/15 mass(Mass)/weight(Weight)/time(Time)" </br>
+> val dose : string = "2/15 mass(Mass)/weight(Weight)/time(Time)" 
 
 *)
 
@@ -129,77 +129,15 @@ cg |> UG.getUnits
 
 (** Results in: 
 
-> 
 > kg(Mass)/kg(Weight)/sec(Time) </br>
 > kg(Mass)/kg(Weight)/min(Time) </br>
 > kg(Mass)/kg(Weight)/hr(Time) </br>
-> kg(Mass)/kg(Weight)/day(Time) </br>
-> kg(Mass)/kg(Weight)/week(Time) </br>
-> kg(Mass)/kg(Weight)/mo(Time) </br>
-> kg(Mass)/kg(Weight)/yr(Time) </br>
-> kg(Mass)/g(Weight)/sec(Time) </br>
-> kg(Mass)/g(Weight)/min(Time) </br>
-> kg(Mass)/g(Weight)/hr(Time) </br>
-> kg(Mass)/g(Weight)/day(Time) </br>
-> kg(Mass)/g(Weight)/week(Time) </br>
-> kg(Mass)/g(Weight)/mo(Time) </br>
-> kg(Mass)/g(Weight)/yr(Time) </br>
-> g(Mass)/kg(Weight)/sec(Time) </br>
-> g(Mass)/kg(Weight)/min(Time) </br>
-> g(Mass)/kg(Weight)/hr(Time) </br>
-> g(Mass)/kg(Weight)/day(Time) </br>
-> g(Mass)/kg(Weight)/week(Time) </br>
-> g(Mass)/kg(Weight)/mo(Time) </br>
-> g(Mass)/kg(Weight)/yr(Time) </br>
-> g(Mass)/g(Weight)/sec(Time) </br>
-> g(Mass)/g(Weight)/min(Time) </br>
-> g(Mass)/g(Weight)/hr(Time) </br>
-> g(Mass)/g(Weight)/day(Time) </br>
-> g(Mass)/g(Weight)/week(Time) </br>
-> g(Mass)/g(Weight)/mo(Time) </br>
-> g(Mass)/g(Weight)/yr(Time) </br>
-> mg(Mass)/kg(Weight)/sec(Time) </br>
-> mg(Mass)/kg(Weight)/min(Time) </br>
-> mg(Mass)/kg(Weight)/hr(Time) </br>
-> mg(Mass)/kg(Weight)/day(Time) </br>
-> mg(Mass)/kg(Weight)/week(Time) </br>
-> mg(Mass)/kg(Weight)/mo(Time) </br>
-> mg(Mass)/kg(Weight)/yr(Time) </br>
-> mg(Mass)/g(Weight)/sec(Time) </br>
-> mg(Mass)/g(Weight)/min(Time) </br>
-> mg(Mass)/g(Weight)/hr(Time) </br>
-> mg(Mass)/g(Weight)/day(Time) </br>
-> mg(Mass)/g(Weight)/week(Time) </br>
-> mg(Mass)/g(Weight)/mo(Time) </br>
-> mg(Mass)/g(Weight)/yr(Time) </br>
-> mcg(Mass)/kg(Weight)/sec(Time) </br>
-> mcg(Mass)/kg(Weight)/min(Time) </br>
-> mcg(Mass)/kg(Weight)/hr(Time) </br>
-> mcg(Mass)/kg(Weight)/day(Time) </br>
-> mcg(Mass)/kg(Weight)/week(Time) </br>
-> mcg(Mass)/kg(Weight)/mo(Time) </br>
-> mcg(Mass)/kg(Weight)/yr(Time) </br>
-> mcg(Mass)/g(Weight)/sec(Time) </br>
-> mcg(Mass)/g(Weight)/min(Time) </br>
-> mcg(Mass)/g(Weight)/hr(Time) </br>
-> mcg(Mass)/g(Weight)/day(Time) </br>
-> mcg(Mass)/g(Weight)/week(Time) </br>
-> mcg(Mass)/g(Weight)/mo(Time) </br>
-> mcg(Mass)/g(Weight)/yr(Time) </br>
-> nanog(Mass)/kg(Weight)/sec(Time) </br>
-> nanog(Mass)/kg(Weight)/min(Time) </br>
-> nanog(Mass)/kg(Weight)/hr(Time) </br>
-> nanog(Mass)/kg(Weight)/day(Time) </br>
-> nanog(Mass)/kg(Weight)/week(Time) </br>
-> nanog(Mass)/kg(Weight)/mo(Time) </br>
-> nanog(Mass)/kg(Weight)/yr(Time) </br>
-> nanog(Mass)/g(Weight)/sec(Time) </br>
-> nanog(Mass)/g(Weight)/min(Time) </br>
+> .... </br>
 > nanog(Mass)/g(Weight)/hr(Time) </br>
 > nanog(Mass)/g(Weight)/day(Time) </br>
 > nanog(Mass)/g(Weight)/week(Time) </br>
 > nanog(Mass)/g(Weight)/mo(Time) </br>
-> nanog(Mass)/g(Weight)/yr(Time) </br>
+> nanog(Mass)/g(Weight)/yr(Time) 
 
 *)
 

@@ -1,3 +1,8 @@
+#### 0.4.0-beta - May 15 2016
+* Added possibility to calculate with unit groups
+* Convert a unit group to all possible units
+* Removed general group, instead create special group with multiplier 1 if not an existing unit
+
 #### 0.3.1-beta - May 15 2016
 * Added tests
 * Removed dependencies on FsCheck and Unquote

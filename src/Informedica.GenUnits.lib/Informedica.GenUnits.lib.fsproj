@@ -61,6 +61,9 @@
     <Compile Include="Constants.fs" />
     <Compile Include="Utils.fs" />
     <Compile Include="Unit.fs" />
+    <Compile Include="CombiUnit.fs" />
+    <Compile Include="UnitGroup.fs" />
+    <Compile Include="ValueUnit.fs" />
     <Compile Include="Api.fs" />
     <None Include="paket.references" />
     <None Include="Scripts\load-references-release.fsx" />

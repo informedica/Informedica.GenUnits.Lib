@@ -4,5 +4,8 @@
 #load "../Constants.fs"
       "../Utils.fs"
       "../Unit.fs"
+      "../CombiUnit.fs"
+      "../UnitGroup.fs"
+      "../ValueUnit.fs"
       "../Api.fs"
       "../AssemblyInfo.fs"

@@ -7,10 +7,6 @@ module Constants =
         [<Literal>] 
         let countGroup = "Count"
         [<Literal>]
-        let countName = "Times" 
-        [<Literal>]
-        let countAbbr = "X" 
-        [<Literal>]
         let massGroup = "Mass"
         [<Literal>]
         let molarGroup = "Molar"
@@ -19,7 +15,7 @@ module Constants =
         [<Literal>]
         let bsaGroup = "BSA"
         [<Literal>]
-        let volumeGroup = "volumeUnits"
+        let volumeGroup = "Volume"
         [<Literal>]
         let timeGroup = "Time"
         [<Literal>]
@@ -34,3 +30,8 @@ module Constants =
         let empts = ""
         [<Literal>]
         let space = " "
+        [<Literal>]
+        let openBr = "["
+        [<Literal>]
+        let closBr = "]"
+

@@ -5,7 +5,9 @@ open Informedica.GenUtils.Lib.BCL
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]        
 module ValueUnit =
 
-    module SBCL = Informedica.GenUtils.Lib.BCL.String
+    open Informedica.GenUtils.Lib.BCL
+
+    module CS = Constants
     module UN = Unit
     module CU = CombiUnit
 
@@ -49,12 +51,12 @@ module ValueUnit =
         v.ToString() + " " + (u |> CU.toString)
 
     let fromString s =
-        match s |> SBCL.split CU.space with
+        match s |> String.split CS.space with
         | vs::rest ->
             let v = vs |> BigRational.Parse
             let cu = 
                 rest
-                |> String.concat CU.empts
+                |> String.concat CS.empts
                 |> CU.fromString
             (v, cu) |> ValueUnit
         | _ -> failwith "Cannot parse string"

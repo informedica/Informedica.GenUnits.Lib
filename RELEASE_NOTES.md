@@ -1,3 +1,7 @@
+#### 0.4.1-beta - May 20 2016
+* Use brackets to delimit unit groups instead of parentheses
+* Update docs
+
 #### 0.4.0-beta - May 19 2016
 * Added possibility to calculate with unit groups
 * Convert a unit group to all possible units

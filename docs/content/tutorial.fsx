@@ -2,6 +2,13 @@
 #I "../../src/Informedica.GenUnits.Lib/Scripts"
 #load "load-project-release.fsx"
 
+open Informedica.GenUtils.Lib.BCL
+
+module CS = Informedica.GenUnits.Lib.Constants
+
+let print s = 
+    printfn "> %s </br>" s
+
 #time
 
 (**
@@ -25,25 +32,32 @@ Print out the *value units*
 ``500 mg`` |> VU.toString
 ``2 dd``   |> VU.toString
 
+(*** hide **)
+``500 mg`` |> VU.toString |> print
+``2 dd``   |> VU.toString |> print
+
 (** 
 Output:
 
-> val it : string = "500 mg(Mass)"
-> val it : string = "2 X(Count)/day(Time)"
+> 500 mg[Mass] </br>
+> 2 X[Count]/day[Time]
 
 *)
 
 (** 
-Perform a calculation: 2 X/day * 500 mg = 1000 mg/day
+Perform a calculation: 2 X/day \* 500 mg = 1000 mg/day
 *)
 
 let tot = ``2 dd`` * ``500 mg`` 
 tot |> VU.toString
 
+(*** hide **)
+tot |> VU.toString |> print
+
 (** 
 Output:
 
- > val it : string = "1000 mg(Mass)/day(Time)"
+ > 1000 mg[Mass]/day[Time] </br>
 
 *)
 
@@ -54,10 +68,13 @@ Convert 1000 mg/day to g/week
 let ``gram/week`` = 1N |> CU.withUnit gram |> CU.per 1N week
 tot |> VU.convertTo ``gram/week`` |> VU.toString
 
+(*** hide **)
+tot |> VU.convertTo ``gram/week`` |> VU.toString |> print
+
 (** 
 Output:
 
-> val it : string = "7 g(Mass)/week(Time)"
+> 7 g[Mass]/week[Time]
 
 *)
 
@@ -66,7 +83,25 @@ Output:
 
 *)
 
-"mg(Mass)/kg(Weight)/2 day(Time)" |> CU.fromString
+"mg[Mass]/kg[Weight]/2 day[Time]" |> CU.fromString
+
+(** 
+
+    Combi
+    (1N,{Group = Name "Mass"; 
+            Name = (Name "MilliGram", []); 
+            Abbreviation = (Name "mg", []); 
+            Multiplier = 1/1000N;}, 
+        [(Per, 1N, {Group = Name "Kg"; 
+                    Name = (Name "kg", []); 
+                    Abbreviation = (Name "kg", []); 
+                    Multiplier = 1N;}); 
+        (Per, 2N, {Group = Name "Time"; 
+                    Name = (Name "Day", []); 
+                    Abbreviation = (Name "day", []); 
+                    Multiplier = 86400N;})])
+
+*)
 
 (** 
 
@@ -74,31 +109,51 @@ And a value with a unit
 
 *)
 
-"20 mg(Mass)/kg(Weight)/2 day(Time)" |> VU.fromString
+"20 mg[Mass]/kg[Weight]/2 day[Time]" |> VU.fromString
 tot |> VU.convertTo ``gram/week`` |> VU.toString |> VU.fromString
 ``2 dd`` |> VU.toString |> VU.fromString
+
+(** 
+
+    ValueUnit 
+    (2N, 
+        Combi (1N,{Group = Name "Count"; 
+                Name = (Name "Times", []);  
+                Abbreviation = (Name "X", []); 
+                Multiplier = 1N;},[(Per, 1N, {Group = Name "Time"; 
+                                                Name = (Name "Day", []); 
+                                                Abbreviation = (Name "day", []); 
+                                                Multiplier = 86400N;})])) 
+
+*)
+
 
 (** 
 ## Evaluate an expression
 
 *)
 
-"2 mg(Mass) * 3 X(Count)/day(Time)" |> Api.eval
+"2 mg[Mass] * 3 X[Count]/day[Time]" |> Api.eval
 
-let conc = "200 mg(Mass) / 50 ml(Volume)" |> Api.eval
-let rate = "2 mL(Mass)/hour(Time)"      |> Api.eval
+(** 
+
+> "6 mg[Mass]/day[Time]"
+
+*)
+
+let conc = "200 mg[Mass] / 50 ml[Volume]" |> Api.eval
+let rate = "2 mL[Mass]/hour[Time]"      |> Api.eval
 let dose = 
-    rate + " * " + conc + " / 60 kg(Weight)" 
+    rate + " * " + conc + " / 60 kg[Weight]" 
     |> Api.eval
-    |> Api.convert "mcg(Mass)/kg(Weight)/min(Time)"
+    |> Api.convert "mcg[Mass]/kg[Weight]/min[Time]"
 
 
 (** 
 
-> val it : string = "6 mass(Mass)/time(Time)" </br>
-> val conc : string = "4 mass(Mass)/volume(Volume)" </br>
-> val rate : string = "2 mass(Mass)/time(Time)" </br>
-> val dose : string = "2/15 mass(Mass)/weight(Weight)/time(Time)" 
+> val conc : string = "4 mg[Mass]/ml[Volume]" </br>
+> val rate : string = "2 ml[Ml]/hr[Time]" </br>
+> val dose : string = "20000/9 mcg[Mass]/kg[Kg]/min[Time]" 
 
 *)
 
@@ -129,15 +184,15 @@ cg |> UG.getUnits
 
 (** Results in: 
 
-> kg(Mass)/kg(Weight)/sec(Time) </br>
-> kg(Mass)/kg(Weight)/min(Time) </br>
-> kg(Mass)/kg(Weight)/hr(Time) </br>
+> kg[Mass]/kg[Weight]/sec[Time] </br>
+> kg[Mass]/kg[Weight]/min[Time] </br>
+> kg[Mass]/kg[Weight]/hr[Time] </br>
+> </br>
 > .... </br>
-> nanog(Mass)/g(Weight)/hr(Time) </br>
-> nanog(Mass)/g(Weight)/day(Time) </br>
-> nanog(Mass)/g(Weight)/week(Time) </br>
-> nanog(Mass)/g(Weight)/mo(Time) </br>
-> nanog(Mass)/g(Weight)/yr(Time) 
+> </br>
+> nanog[Mass]/g[Weight]/week[Time] </br>
+> nanog[Mass]/g[Weight]/mo[Time] </br>
+> nanog[Mass]/g[Weight]/yr[Time]
 
 *)
 
@@ -152,9 +207,9 @@ When a unit is 'unknown', i.e. not defined in the library, a special unit group 
 
 (** 
 
-> val it : CombiUnit.CombiUnit = Combi (1N,{Group = Name "Shape";
->                                           Name = (Name "tablet", []);
->                                           Abbreviation = (Name "tablet", []);
->                                           Multiplier = 1N;},[])
+     CombiUnit.CombiUnit = Combi (1N,{Group = Name "Shape"; 
+                                      Name = (Name "tablet", []); 
+                                      Abbreviation = (Name "tablet", []); 
+                                      Multiplier = 1N;},[]) 
 
 *)

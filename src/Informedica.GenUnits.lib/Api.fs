@@ -2,8 +2,9 @@
 
 module Api =
 
+    open Informedica.GenUtils.Lib.BCL
+
     module C = Constants
-    module SBCL = Informedica.GenUtils.Lib.BCL.String
     module CU = CombiUnit
     module VU = ValueUnit
     
@@ -42,11 +43,11 @@ module Api =
                 | _ -> failwith "Cannot evaluate string"          
 
         s 
-        |> SBCL.replace mults  (C.mults |> addDel)
-        |> SBCL.replace divs   (C.divs  |> addDel)
-        |> SBCL.replace adds   (adds    |> addDel)
-        |> SBCL.replace subtrs (subtrs  |> addDel)
-        |> SBCL.split del
+        |> String.replace mults  (C.mults |> addDel)
+        |> String.replace divs   (C.divs  |> addDel)
+        |> String.replace adds   (adds    |> addDel)
+        |> String.replace subtrs (subtrs  |> addDel)
+        |> String.split del
         |> eval' None
         |> VU.toString
 

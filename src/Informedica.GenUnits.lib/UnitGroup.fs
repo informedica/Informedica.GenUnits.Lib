@@ -7,6 +7,7 @@ module UnitGroup =
 
     open Informedica.GenUnits.Lib
 
+    module CS = Constants
     module UN = Unit
     module NM = UN.Name
     module CU = CombiUnit
@@ -16,10 +17,6 @@ module UnitGroup =
     let create n = (n |> NM.Name, []) |> UnitGroup
 
     let nameToString (NM.Name n) = n
-
-    let opToString = function
-        | CU.Per -> "/"
-        | CU.Times -> "*"
 
     let apply f (ug: UnitGroup) = ug |> f
 
@@ -42,20 +39,11 @@ module UnitGroup =
 
     let toString ug =
         let n, nl = ug |> getAll
-        (n |> nameToString)::(nl |> List.map (fun (op, n) -> (op |> opToString) + (n |> nameToString) ))
+        (n |> nameToString)::(nl |> List.map (fun (op, n) -> (op |> CU.opToString) + (n |> nameToString) ))
         |> String.concat ""
 
     let fromString s =
         let dels = "#"
-        let mults = "*"
-        let divs  = "/"
-        let space = " "
-
-        let ofs s =
-            match s with
-            | _ when s = mults -> CU.Times
-            | _ when s = divs  -> CU.Per
-            | _ -> failwith "Not a valid operator string"
 
         let rec parse ul usl =
             match usl with
@@ -64,13 +52,13 @@ module UnitGroup =
                 (u, ul) |> UnitGroup
             | us::os::rest -> 
                 let u = us |> NM.Name
-                let o = os |> ofs
+                let o = os |> CU.opFromString
                 rest |> parse ([ (o, u)] @ ul)
             | _ -> failwith "Cannot parse string list"
 
         s
-        |> String.replace mults (dels + mults + dels)
-        |> String.replace divs  (dels + divs + dels)
+        |> String.replace CS.mults (dels + CS.mults + dels)
+        |> String.replace CS.divs  (dels + CS.divs + dels)
         |> String.split dels
         |> List.rev
         |> parse []

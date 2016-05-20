@@ -1,9 +1,10 @@
 ﻿namespace Informedica.GenUnits.Lib
 
-open Informedica.GenUtils.Lib.BCL
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Unit =  
+
+    open Informedica.GenUtils.Lib.BCL
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Multipliers =
@@ -33,7 +34,7 @@ module Unit =
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Name = 
 
-        module SBCL = Informedica.GenUtils.Lib.BCL.String
+        open Informedica.GenUtils.Lib.BCL
 
         type Name = Name of string
 
@@ -52,7 +53,7 @@ module Unit =
             | _ when s.Length > 30 -> 
                 s |> NameCannotBeLongerThan30 |> fail
             | _ -> 
-                s |> SBCL.trim |> Name |> succ
+                s |> String.trim |> Name |> succ
 
         let apply f (Name n) = n |> f
 
@@ -60,11 +61,11 @@ module Unit =
 
         let change f x = x |> apply f |> create
 
-        let eqs s n = n |> get |> SBCL.equalsCapInsens s
+        let eqs s n = n |> get |> String.equalsCapInsens s
 
-        let toLower = get >> SBCL.toLower >> Name
+        let toLower = get >> String.toLower >> Name
 
-        let capitalize = get >> SBCL.capitalize >> Name
+        let capitalize = get >> String.capitalize >> Name
 
         let toString (Name n) = n
 
@@ -135,7 +136,6 @@ module Unit =
     module Units =
 
         module C = Constants
-        module SBCL = Informedica.GenUtils.Lib.BCL.String
         module N = Name
 
         let name = N.create id (fun m -> m |> N.raiseExc)
@@ -241,6 +241,8 @@ module Unit =
         let adjustFromString succ fail   = find' [weightUnits;bsaUnits] succ fail
         let timeFromString succ fail     = find' [timeUnits] succ fail
 
+        /// Create a unit from string `s` with
+        /// group `g`.
         let fromString s g =
             match s |> find Some (fun _ -> None) units g with
             | Some(u) -> u |> Some

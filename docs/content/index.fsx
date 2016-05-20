@@ -30,12 +30,12 @@ This example demonstrates using a function defined in this sample library.
 
 module API = Informedica.GenUnits.Lib.Api
 
-API.eval "20 mg/ml * 10 ml"
+API.eval "20 mg[Mass]/ml[Volume] * 10 ml[Volume]"
 
 (**
 Will return:
 
-> val it : string = "200 mg"
+> val it : string = "200 mg[Mass]"
 
 Some more info
 

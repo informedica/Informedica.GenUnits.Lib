@@ -5,18 +5,9 @@ open Informedica.GenUtils.Lib.BCL
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module CombiUnit =
 
-    module C = Constants
+    open Informedica.GenUtils.Lib.BCL
 
-    [<Literal>] 
-    let mults = C.mults
-    [<Literal>] 
-    let divs  = C.divs
-    [<Literal>]
-    let empts = C.empts
-    [<Literal>]
-    let space = C.space
-
-    module SBCL = Informedica.GenUtils.Lib.BCL.String
+    module CS = Constants
     module UN = Unit
     module MP = UN.Multipliers
     module NM = UN.Name
@@ -139,49 +130,53 @@ module CombiUnit =
             if cu1 |> eqGroup cu2 then cu2
             else failwith "Cannot add units with different unit groups"
 
+    let opToString = function
+        | Per   -> CS.divs
+        | Times -> CS.mults
+
+    let opFromString s =
+        match s with
+        | _ when s = CS.mults -> Times
+        | _ when s = CS.divs  -> Per
+        | _ -> failwith "Not a valid operator string"
+
     let toString cu =
         let abbr = Unit.getAbbreviation >> fst >> Unit.Name.get
         let gr u = u |> Unit.getGroupName |> NM.toString
-        let toStr u = (u |> abbr) + "(" + (u |> gr) + ")"
+        let toStr u = (u |> abbr) + CS.openBr + (u |> gr) + CS.closBr
 
         let bigRatToString (v: BigRational) =
-            if v = 1N then empts else v.ToString()
+            if v = 1N then CS.empts else v.ToString()
 
         let v, u, ul = cu |> get
-        let acc = (v |> bigRatToString) + space + (u |> toStr) |> String.trim
+        let acc = (v |> bigRatToString) + CS.space + (u |> toStr) |> String.trim
         ul 
         |> List.fold (fun acc (o, v, u) -> 
                 let v' = v |> bigRatToString
-                let o' = match o with | Times -> mults | Per -> divs
+                let o' = o |> opToString
                 let u' = u |> toStr
                 acc +
-                if v' = empts then o' + u' else v' + space + o' + u') acc
+                if v' = CS.empts then o' + u' else v' + CS.space + o' + u') acc
 
     let fromString s =
         let dels = "#"
         let getUnitAndGroup ug = 
-            match ug |> String.replace ")" "" |> String.split "(" with
+            match ug |> String.replace CS.closBr CS.empts |> String.split CS.openBr with
             | [u;g] -> u, g
             | _ -> sprintf "Could not parse unit from string: %s" ug |> failwith
 
-        let ofs s =
-            match s with
-            | _ when s = mults -> Times
-            | _ when s = divs  -> Per
-            | _ -> failwith "Not a valid operator string"
-
         let ufs s =
-            match s |> SBCL.split space with
+            match s |> String.split CS.space with
             | [ug] ->
                 let u, g = ug |> getUnitAndGroup 
-                match u |> UN.Units.fromString g with
-                | Some (u) -> 1N, u
+                match UN.Units.fromString u g with
+                | Some (u') -> 1N, u'
                 | None     -> failwith "Not a valid unit"
             | [v;ug] -> 
                 let u, g = ug |> getUnitAndGroup 
                 let v' = v |> BigRational.Parse
-                match u |> UN.Units.fromString g with
-                | Some (u) -> v', u
+                match UN.Units.fromString u g with
+                | Some (u') -> v', u'
                 | None     -> failwith "Not a valid unit"
             | _ -> failwith "Cannot parse string"
 
@@ -192,14 +187,14 @@ module CombiUnit =
                 (v, u, ul) |> Combi
             | us::os::rest -> 
                 let v, u = us |> ufs
-                let o = os |> ofs
+                let o = os |> opFromString
                 rest |> parse ([ (o, v, u)] @ ul)
             | _ -> failwith "Cannot parse string list"
 
         s 
-        |> SBCL.replace mults (dels + mults + dels) 
-        |> SBCL.replace divs  (dels + divs + dels)
-        |> SBCL.split dels
+        |> String.replace CS.mults (dels + CS.mults + dels) 
+        |> String.replace CS.divs  (dels + CS.divs + dels)
+        |> String.split dels
         |> List.rev
         |> parse []
         

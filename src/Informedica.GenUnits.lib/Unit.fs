@@ -228,8 +228,7 @@ module Unit =
             let u =
                 us 
                 |> List.collect id
-                |> List.tryFind (hasName s)
-                |> Option.bind (fun u -> if u |> isGroup g then Some u else None)
+                |> List.tryFind (fun u -> u |> hasName s && u |> isGroup g)
 
             match u with 
             | Some u -> u |> succ

@@ -66,6 +66,8 @@
     <None Include="Script.fsx" />
     <None Include="paket.references" />
     <Content Include="App.config" />
+    <None Include="Scripts\load-references-release.fsx" />
+    <None Include="Scripts\load-project-release.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

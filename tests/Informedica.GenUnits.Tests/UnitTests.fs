@@ -74,3 +74,26 @@ module UnitTests =
                         let succ _ = s |> String.length <= 30
                         let fail _ = true
                         s |> create succ fail )
+
+        module UnitsTests =
+            
+            open Informedica.GenUnits.Lib
+
+            module UG = UnitGroup
+            module UN = Unit
+            module US = UN.Units
+            module NM = Unit.Name
+
+            let unitGroups =
+                US.units 
+                |> List.collect (List.map (fun u -> 
+                    (u |> UN.getName |> fst |> NM.toString, u |> UN.getGroupName |> NM.toString)))
+
+
+            [<TestFixture>]
+            type ``For every unit and group name combination`` () =
+                
+                [<Test>]
+                member x.``Unit and group can be generate from string and returned from string`` () =
+                    for (u, g) in unitGroups do
+                        test<@ US.fromString u g |> Option.isSome @>

@@ -97,3 +97,19 @@ module UnitTests =
                 member x.``Unit and group can be generate from string and returned from string`` () =
                     for (u, g) in unitGroups do
                         test<@ US.fromString u g |> Option.isSome @>
+
+            [<TestFixture>]
+            type ``For every group of units`` () =
+                let groups = 
+                    US.units
+                    |> List.map (fun us -> us.Head.Group)
+
+                [<Test>]
+                member x.``The number of units equals the units in the group`` () =
+                    let c1 = 
+                        groups
+                        |> List.collect (fun n -> (n, []) |> UG.UnitGroup |> UG.getUnits)
+                        |> List.length
+                    let c2 = US.units |> List.collect id |> List.length
+                    test <@ c1 = c2 @>
+

@@ -147,68 +147,68 @@ module Unit =
             create id (fun m -> m |> raiseExc) g' n' a' m
 
         [<Literal>]
-        let countGroup = C.countGroup
+        let countGroup  = C.countGroup
         let createCount = create' countGroup
-        let count =  createCount "Times" "X" MP.one  
-        let countUnits = [count] 
+        let count       = createCount "Times" "X" MP.one  
+        let countUnits  = [count] 
 
         [<Literal>]
-        let massGroup = C.massGroup
+        let massGroup  = C.massGroup
         let createMass = create' massGroup
-        let kiloGram  = createMass "KiloGram"  "kg"    MP.kilo
-        let gram      = createMass "Gram"      "g"     MP.one
-        let milliGram = createMass "MilliGram" "mg"    MP.milli
-        let microGram = createMass "MicroGram" "mcg"   MP.micro
-        let nanoGram  = createMass "NanoGram"  "nanog" MP.nano
-        let massUnits = [kiloGram;gram;milliGram;microGram;nanoGram]
+        let kiloGram   = createMass "KiloGram"  "kg"    MP.kilo
+        let gram       = createMass "Gram"      "g"     MP.one
+        let milliGram  = createMass "MilliGram" "mg"    MP.milli
+        let microGram  = createMass "MicroGram" "mcg"   MP.micro
+        let nanoGram   = createMass "NanoGram"  "nanog" MP.nano
+        let massUnits  = [kiloGram;gram;milliGram;microGram;nanoGram]
 
         [<Literal>]
-        let molarGroup = C.molarGroup
+        let molarGroup  = C.molarGroup
         let createMolar = create' molarGroup
-        let mol      = createMass "Mol"      "mol"  MP.one  
-        let milliMol = createMass "MilliMol" "mmol" MP.milli  
-        let molarUnits = [mol;milliMol] 
+        let mol         = createMolar "Mol"      "mol"  MP.one  
+        let milliMol    = createMolar "MilliMol" "mmol" MP.milli  
+        let molarUnits  = [mol;milliMol] 
 
         [<Literal>]
-        let weightGroup = C.weightGroup
+        let weightGroup  = C.weightGroup
         let createWeight = create' weightGroup
-        let weightKg   = createWeight "KiloGram" "kg" MP.kilo 
-        let weightGram = createWeight "Gram"     "g"  MP.one
-        let weightUnits = [weightKg;weightGram] 
+        let weightKg     = createWeight "KiloGram" "kg" MP.kilo 
+        let weightGram   = createWeight "Gram"     "g"  MP.one
+        let weightUnits  = [weightKg;weightGram] 
 
         [<Literal>]
-        let bsaGroup = C.bsaGroup
+        let bsaGroup  = C.bsaGroup
         let createBSA = create' bsaGroup
-        let bsa = createBSA "SquareMeter" "m^s" MP.kilo 
-        let bsaUnits = [bsa]
+        let bsa       = createBSA "SquareMeter" "m^s" MP.kilo 
+        let bsaUnits  = [bsa]
 
         [<Literal>]
-        let volumeGroup = C.volumeGroup
+        let volumeGroup  = C.volumeGroup
         let createVolume = create' volumeGroup
-        let liter      = createVolume "Liter"      "l"   MP.one
-        let deciLiter  = createVolume "DeciLiter"  "dl"  MP.deci 
-        let milliLiter = createVolume "MilliLiter" "ml"  MP.milli 
-        let microLiter = createVolume "MicroLiter" "mcl" MP.micro 
-        let volumeUnits = [liter;deciLiter;milliLiter;microLiter]
+        let liter        = createVolume "Liter"      "l"   MP.one
+        let deciLiter    = createVolume "DeciLiter"  "dl"  MP.deci 
+        let milliLiter   = createVolume "MilliLiter" "ml"  MP.milli 
+        let microLiter   = createVolume "MicroLiter" "mcl" MP.micro 
+        let volumeUnits  = [liter;deciLiter;milliLiter;microLiter]
 
         [<Literal>]
-        let timeGroup = C.timeGroup
+        let timeGroup  = C.timeGroup
         let createTime = create' timeGroup
-        let second = createTime "Second" "sec"  MP.one 
-        let minute = createTime "Minute" "min"  MP.minute
-        let hour   = createTime "Hour"   "hr"   MP.hour
-        let day    = createTime "Day"    "day"  MP.day
-        let week   = createTime "Week"   "week" MP.week
-        let month  = createTime "Month"  "mo"   MP.month 
-        let year   = createTime "Year"   "yr"   MP.year
-        let timeUnits = [second;minute;hour;day;week;month;year] 
+        let second     = createTime "Second" "sec"  MP.one 
+        let minute     = createTime "Minute" "min"  MP.minute
+        let hour       = createTime "Hour"   "hr"   MP.hour
+        let day        = createTime "Day"    "day"  MP.day
+        let week       = createTime "Week"   "week" MP.week
+        let month      = createTime "Month"  "mo"   MP.month 
+        let year       = createTime "Year"   "yr"   MP.year
+        let timeUnits  = [second;minute;hour;day;week;month;year] 
 
         [<Literal>]
-        let distanceGroup = C.distanceGroup
+        let distanceGroup  = C.distanceGroup
         let createDistance = create' distanceGroup
-        let meter      = createDistance "Meter"      "m"  MP.one 
-        let centimeter = createDistance "CentiMeter" "cm" MP.centi 
-        let distanceUnits = [meter;centimeter]
+        let meter          = createDistance "Meter"      "m"  MP.one 
+        let centimeter     = createDistance "CentiMeter" "cm" MP.centi 
+        let distanceUnits  = [meter;centimeter]
 
         let units = [countUnits;massUnits;molarUnits;weightUnits;bsaUnits;volumeUnits;timeUnits;distanceUnits]
 

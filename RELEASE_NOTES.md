@@ -1,3 +1,7 @@
+#### 0.4.3-beta - May 21 2016
+* Fixed bug in molar group
+* Added test to cover the bug
+
 #### 0.4.2-beta - May 20 2016
 * Fixed bug in find unit with group
 * Added test to cover the bug

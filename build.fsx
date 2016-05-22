@@ -112,8 +112,7 @@ Target "Integrate" (fun _ ->
         // Check whether the builds passed
         match lastTravisBuild, lastAppVeyorBuild with
         | Some (id, dt, br, st), Some (id', dt', br', st') -> 
-//            printfn "curr: %s, travis: %s, appveyor; %s" currId id id'
-            if id = currId && id = id' && br = br' && st = traVsucc &&   st' = appVsucc then
+            if id = currId && id = id' && st = traVsucc && st' = appVsucc then
                 printfn "Last build was at %A and %s" dt st
                 // Update the master branch with the latest remote master
                 Git.Branches.checkoutBranch currDir master
@@ -126,7 +125,8 @@ Target "Integrate" (fun _ ->
                 Git.Branches.checkoutBranch currDir develop
             else 
                 printfn "curr: %s, travis: %s, appveyor; %s" currId id id'
-                failwith <| sprintf "Last build did not pass on %s" (if st = traVsucc then "AppVeyor" else "Travis")
+                sprintf "Last build did not pass on %s" (if st = traVsucc then "AppVeyor" else "Travis")
+                |> failwith
         | e   -> 
             failwith <| sprintf "Cannot get last build, cannot integrate: %A" e
 )

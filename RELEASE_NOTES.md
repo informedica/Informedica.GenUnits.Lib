@@ -1,3 +1,7 @@
+#### 0.4.4-beta - May 28 2016
+* UnitGroup getUnits also gets a unit for an arbitrary general unit group
+* Updated setup to build the project on GitHub
+
 #### 0.4.3-beta - May 21 2016
 * Fixed bug in molar group
 * Added test to cover the bug

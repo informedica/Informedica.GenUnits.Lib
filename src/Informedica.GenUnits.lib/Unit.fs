@@ -110,6 +110,15 @@ module Unit =
             }
             |> succ
 
+    /// Create a 'general' `Unit` with
+    /// name, abbbreviation and groupname **n**
+    /// and multiplier 1.
+    let createGeneral n = 
+        let g = n |> Name.capitalize
+        let n = n |> Name.toLower
+        let a = n |> Name.toLower
+        create id raiseExc g n a 1N
+
     let applyToUnit f (u: Unit) = u |> f
 
     let getMultiplier   = applyToUnit (fun u -> u.Multiplier)

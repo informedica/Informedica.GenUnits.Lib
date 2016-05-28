@@ -65,12 +65,15 @@ module UnitGroup =
 
     let eqs ug u = u |> fromUnit = ug
 
+    /// Get all possible `CombiUnit` unit combinations
+    /// belonging to a `UnitGroup` **ung**
     let getUnits ug =
         let n, nl = ug |> getAll
 
         let get n = 
-            UN.Units.units
-            |> List.find (fun us -> us.Head.Group = n)
+            match UN.Units.units |> List.tryFind (fun us -> us.Head.Group = n) with
+            | Some us -> us
+            | None    -> [n |> Unit.createGeneral]
 
         let us, usl = n |> get, nl |> List.map (fun (o, u) -> o, u |> get)
             

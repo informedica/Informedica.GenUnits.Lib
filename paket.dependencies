@@ -1,4 +1,6 @@
 redirects: on
+framework: auto-detect
+
 source https://nuget.org/api/v2
 
 // group build
@@ -22,8 +24,8 @@ nuget Informedica.GenUtils.Lib
 // group test
 
 nuget FsUnit
-nuget NUnit ~> 2
-nuget NUnit.Runners ~> 2
+nuget NUnit < 3.0
+nuget NUnit.Runners < 3.0
 nuget Unquote
 nuget FsCheck
 nuget FsCheck.NUnit

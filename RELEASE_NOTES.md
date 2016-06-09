@@ -1,3 +1,6 @@
+#### 0.4.5-beta - June 06 2016
+* Updated GenUtils, fixed missing assemblyinfo
+
 #### 0.4.4-beta - May 28 2016
 * UnitGroup getUnits also gets a unit for an arbitrary general unit group
 * Updated setup to build the project on GitHub

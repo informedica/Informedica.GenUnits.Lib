@@ -1,31 +1,28 @@
 redirects: on
 framework: auto-detect
 
-source https://nuget.org/api/v2
+source https://api.nuget.org/v3/index.json
 
-// group build
+clitool dotnet-fake
 
-nuget FSharp.Formatting
-nuget Fake
-nuget SourceLink.Fake
-nuget Newtonsoft.Json
-
-github fsharp/FAKE modules/Octokit/Octokit.fsx
-
-github halcwb/GenBuild /scripts/targets.fsx
-github halcwb/GenBuild /scripts/travis.fsx
-github halcwb/GenBuild /scripts/appveyor.fsx
-
-// group project
-
-nuget FSPowerPack.Community
+nuget MathNet.Numerics.FSharp
 nuget Informedica.GenUtils.Lib
 
-// group test
+group Formatting
+	source https://api.nuget.org/v3/index.json
 
-nuget FsUnit
-nuget NUnit < 3.0
-nuget NUnit.Runners < 3.0
-nuget Unquote
-nuget FsCheck
-nuget FsCheck.NUnit
+	nuget FSharp.Formatting
+	nuget FSharp.Formatting.CommandTool
+
+
+// group test
+group Test
+    source https://api.nuget.org/v3/index.json
+    framework: netcoreapp3.0
+    storage: none
+
+	nuget Expecto
+	nuget Expecto.BenchmarkDotNet
+	nuget Expecto.FsCheck
+	nuget Expecto.Hopac
+	nuget FSharp.Quotations.Evaluator

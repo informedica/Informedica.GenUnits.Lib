@@ -1,5 +1,6 @@
-FSPowerPack.Community
-Unquote
-FsCheck
-FsCheck.NUnit
-FsUnit
+group Test
+	Expecto
+	Expecto.BenchmarkDotNet
+	Expecto.FsCheck
+	Expecto.Hopac
+	FSharp.Quotations.Evaluator

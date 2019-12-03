@@ -1,59 +1,56 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Informedica.GenUnits.lib", "src\Informedica.GenUnits.lib\Informedica.GenUnits.lib.fsproj", "{11FC65A6-C4DC-4ED7-A617-576BF2E8AD44}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1707BDAA-36BB-4FA7-BB65-41B269644A06}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{204CE0ED-3EEA-4417-BC1E-BCA4545EA45D}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Informedica.GenUnits.Lib", "src\Informedica.GenUnits.Lib\Informedica.GenUnits.Lib.fsproj", "{EE963D07-F118-42AE-B28F-6CEE8A5CB7E3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7C141538-4630-4BBE-8789-A51A316F3C3F}"
-	ProjectSection(SolutionItems) = preProject
-		build.fsx = build.fsx
-		paket.dependencies = paket.dependencies
-		RELEASE_NOTES.md = RELEASE_NOTES.md
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{50A765CD-3366-498F-98E2-E3BE57395BE3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{AA874653-9B28-4F48-B52C-7B826ACA9722}"
-	ProjectSection(SolutionItems) = preProject
-		scripts\AppVeyor.fsx = scripts\AppVeyor.fsx
-		scripts\Settings.fsx = scripts\Settings.fsx
-		scripts\Travis.fsx = scripts\Travis.fsx
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "content", "content", "{642E6C61-5781-4A65-AC92-100A08D19917}"
-	ProjectSection(SolutionItems) = preProject
-		docs\content\index.fsx = docs\content\index.fsx
-		docs\content\tutorial.fsx = docs\content\tutorial.fsx
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{7BB491CA-FBEA-44D7-B986-89E150F5E236}"
-	ProjectSection(SolutionItems) = preProject
-		docs\tools\generate.fsx = docs\tools\generate.fsx
-	EndProjectSection
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Informedica.GenUnits.Tests", "tests\Informedica.GenUnits.Tests\Informedica.GenUnits.Tests.fsproj", "{87D82D89-2E77-43D7-8DC0-2E082EDFD78E}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Informedica.GenUnits.Tests", "tests\Informedica.GenUnits.Tests\Informedica.GenUnits.Tests.fsproj", "{4DBF9613-9A14-45C2-A07B-3C2D4EF97C29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{11FC65A6-C4DC-4ED7-A617-576BF2E8AD44}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{11FC65A6-C4DC-4ED7-A617-576BF2E8AD44}.Debug|Any CPU.Build.0 = Release|Any CPU
-		{11FC65A6-C4DC-4ED7-A617-576BF2E8AD44}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{11FC65A6-C4DC-4ED7-A617-576BF2E8AD44}.Release|Any CPU.Build.0 = Release|Any CPU
-		{87D82D89-2E77-43D7-8DC0-2E082EDFD78E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87D82D89-2E77-43D7-8DC0-2E082EDFD78E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{87D82D89-2E77-43D7-8DC0-2E082EDFD78E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87D82D89-2E77-43D7-8DC0-2E082EDFD78E}.Release|Any CPU.Build.0 = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE963D07-F118-42AE-B28F-6CEE8A5CB7E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE963D07-F118-42AE-B28F-6CEE8A5CB7E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE963D07-F118-42AE-B28F-6CEE8A5CB7E3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EE963D07-F118-42AE-B28F-6CEE8A5CB7E3}.Debug|x64.Build.0 = Debug|Any CPU
+		{EE963D07-F118-42AE-B28F-6CEE8A5CB7E3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EE963D07-F118-42AE-B28F-6CEE8A5CB7E3}.Debug|x86.Build.0 = Debug|Any CPU
+		{EE963D07-F118-42AE-B28F-6CEE8A5CB7E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE963D07-F118-42AE-B28F-6CEE8A5CB7E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE963D07-F118-42AE-B28F-6CEE8A5CB7E3}.Release|x64.ActiveCfg = Release|Any CPU
+		{EE963D07-F118-42AE-B28F-6CEE8A5CB7E3}.Release|x64.Build.0 = Release|Any CPU
+		{EE963D07-F118-42AE-B28F-6CEE8A5CB7E3}.Release|x86.ActiveCfg = Release|Any CPU
+		{EE963D07-F118-42AE-B28F-6CEE8A5CB7E3}.Release|x86.Build.0 = Release|Any CPU
+		{4DBF9613-9A14-45C2-A07B-3C2D4EF97C29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DBF9613-9A14-45C2-A07B-3C2D4EF97C29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DBF9613-9A14-45C2-A07B-3C2D4EF97C29}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4DBF9613-9A14-45C2-A07B-3C2D4EF97C29}.Debug|x64.Build.0 = Debug|Any CPU
+		{4DBF9613-9A14-45C2-A07B-3C2D4EF97C29}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4DBF9613-9A14-45C2-A07B-3C2D4EF97C29}.Debug|x86.Build.0 = Debug|Any CPU
+		{4DBF9613-9A14-45C2-A07B-3C2D4EF97C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DBF9613-9A14-45C2-A07B-3C2D4EF97C29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DBF9613-9A14-45C2-A07B-3C2D4EF97C29}.Release|x64.ActiveCfg = Release|Any CPU
+		{4DBF9613-9A14-45C2-A07B-3C2D4EF97C29}.Release|x64.Build.0 = Release|Any CPU
+		{4DBF9613-9A14-45C2-A07B-3C2D4EF97C29}.Release|x86.ActiveCfg = Release|Any CPU
+		{4DBF9613-9A14-45C2-A07B-3C2D4EF97C29}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{642E6C61-5781-4A65-AC92-100A08D19917} = {204CE0ED-3EEA-4417-BC1E-BCA4545EA45D}
-		{7BB491CA-FBEA-44D7-B986-89E150F5E236} = {204CE0ED-3EEA-4417-BC1E-BCA4545EA45D}
+		{EE963D07-F118-42AE-B28F-6CEE8A5CB7E3} = {1707BDAA-36BB-4FA7-BB65-41B269644A06}
+		{4DBF9613-9A14-45C2-A07B-3C2D4EF97C29} = {50A765CD-3366-498F-98E2-E3BE57395BE3}
 	EndGlobalSection
 EndGlobal

@@ -1,3 +1,7 @@
+#### 1.0.0-beta - Dec 3 2019
+* Complete workover of the core code
+* Moved everything to dotnetcore
+
 #### 0.4.5-beta - June 06 2016
 * Updated GenUtils, fixed missing assemblyinfo
 

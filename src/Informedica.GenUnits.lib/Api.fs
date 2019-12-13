@@ -14,6 +14,9 @@ module Api =
         let adds   = "+" |> addSpace
         let subtrs = "-" |> addSpace 
 
+        let openPar = "("
+        let closePar = ")"
+
         let del = "#"
         let addDel s = del + s + del
 
@@ -45,7 +48,6 @@ module Api =
         |> String.replace subtrs (subtrs |> addDel)
         |> String.split del
         |> eval' None
-        |> VU.toString VU.Units.English VU.Units.Verbal.Short
 
 
     let convert loc verb s2 s1 = 

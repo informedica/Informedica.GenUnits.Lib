@@ -4,16 +4,15 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="scripts/" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="paket.references" />
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="ValueUnit.fs" />
     <Compile Include="Api.fs" />
     <None Include="Scripts\Scripts.fsx" />
     <None Include="Scripts\references.fsx" />
+    <None Include="scripts\Simplify.fsx" />
     <None Include="Scripts\ValueUnit.fsx" />
+    <None Include="scripts\Api.fsx" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

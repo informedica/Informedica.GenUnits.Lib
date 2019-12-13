@@ -1,5 +1,19 @@
 ﻿namespace Informedica.GenUnits.Lib
 
+
+module List =
+    
+    let remove1 pred =
+        List.fold (fun acc x ->
+            let b, xs = acc
+            if b then (true, x::(acc |> snd))
+            else 
+                if x |> pred then (true, xs)
+                else (false, x::(acc |> snd))
+        ) (false, [])
+        >> snd
+
+
 module ValueUnit = 
 
     open MathNet.Numerics
@@ -358,7 +372,6 @@ module ValueUnit =
 
 
 
-
     module Multipliers =
 
         let one = 1N
@@ -466,37 +479,28 @@ module ValueUnit =
     let count = 1N |> Times |> Count
 
 
-    let createCombiUnit cmbi =
-        let rec create (u1, op, u2) =
+    let createCombiUnit (u1, op, u2)  =
+        if u1 = NoUnit && u2 = NoUnit then NoUnit
+        else
             match op with
             | OpPer ->
-                match u2 with
-                | CombiUnit(Count(Times(n)), OpPer, ur) ->
-                    create (u1, OpTimes, (ur |> apply ((/) n)))
-                | _ ->
-                    match u1, u2 with
-                    | _ when u1 |> Group.eqsGroup u2 ->
-                        count
-                    | _ when u2 |> Group.eqsGroup count ->
-                        u1
-                    | _ -> (u1, OpPer, u2) |> CombiUnit
+                match u1, u2 with
+                | _ when u1 |> Group.eqsGroup u2 ->
+                    count
+                | _ when u2 |> Group.eqsGroup count ->
+                    u1
+                | _ -> (u1, OpPer, u2) |> CombiUnit
             | OpTimes ->
-                match u2 with
-                | CombiUnit(Count(Times(n)), OpPer, ur) -> 
-                    (u1 |> apply ((*) n), OpPer, ur) |> CombiUnit
-                | _  ->
-                    match u1, u2 with
-                    | _ when u1 |> Group.eqsGroup count -> u2
-                    | _ when u2 |> Group.eqsGroup count -> u1
-                    | _ when u1 |> Group.eqsGroup count && 
-                             u2 |> Group.eqsGroup count -> u1
-                    | _ -> (u1, OpTimes, u1) |> CombiUnit
+                match u1, u2 with
+                | _ when u1 |> Group.eqsGroup count -> u2
+                | _ when u2 |> Group.eqsGroup count -> u1
+                | _ when u1 |> Group.eqsGroup count && 
+                         u2 |> Group.eqsGroup count -> u1
+                | _ -> (u1, OpTimes, u2) |> CombiUnit
             | OpPlus | OpMinus ->
                 match u1, u2 with
                 | _ when u1 |> Group.eqsGroup u2 -> u1
                 | _ -> (u1, op, u2) |> CombiUnit
-
-        create cmbi
 
     let per u2 u1 = (u1, OpPer, u2) |> createCombiUnit
 
@@ -542,7 +546,7 @@ module ValueUnit =
         find u1
 
 
-    let isUnit u =
+    let isSimpleUnit u =
         match u with 
         | CombiUnit _ -> false
         | _ -> true
@@ -611,76 +615,75 @@ module ValueUnit =
             | _          -> false
 
 
-
-    let numsDenoms u =
-        let rec nd isNum acc u =
-            match u with
-            | CombiUnit (ul, op, ur) ->
-                match op with
-                | OpPer -> 
-                    nd true acc ul @ (nd false acc ur)
-                | _ -> 
-                    nd true acc ul @ (nd true acc ur)
-            | _ -> 
-                (isNum, u)::acc
-    
-        nd true [] u 
-        |> List.fold (fun acc (b, u) ->
-            let ns, ds = acc
-            if b then (u::ns, ds) else (ns, u::ds)
-        ) ([], [])
-
-
-    let rec getUnits acc u =
+    let rec getUnits u =
         match u with
         | CombiUnit (ul, op, ur) ->
-            ul::ur::acc
-        | _ -> u::acc
+            ul 
+            |> getUnits
+            |> List.append (ur |> getUnits) 
+        | _ -> [ u ]
 
 
     let simplify vu =
         let (_, u) = vu |> get
 
-        let rec simpl u =
-            match u with
-            | CombiUnit (ul, op, ur) ->
-                let uls = ul |> numsDenoms
-                let urs = ur |> numsDenoms
+        let simpl u =
+            let rec numDenom b u =
+                match u with
+                | CombiUnit(ul, OpTimes, ur) ->
+                    let lns, lds = ul |> numDenom b
+                    let rns, rds = ur |> numDenom b 
+                    lns @ rns, lds @ rds
 
-                let ns = (uls |> fst) @ (urs |> fst)
-                let ds = (uls |> snd) @ (urs |> snd)
+                | CombiUnit(ul, OpPer, ur) ->
+                    if b then
+                        let lns, lds = ul |> numDenom true
+                        let rns, rds = ur |> numDenom false 
+                        lns @ rns, lds @ rds
+                    else 
+                        let lns, lds = ur |> numDenom true
+                        let rns, rds = ul |> numDenom false 
+                        lns @ rns, lds @ rds
+                | _ -> if b then (u |> getUnits, []) else ([], u |> getUnits)
 
-                let ru = 
-                    [ for n in ns do
-                        for d in ds do
-                            if d |> Group.eqsGroup n then
-                                yield n ]
+            let rec build ns ds u =
+                match ns, ds with
+                | [], _ -> 
+                    match ds with
+                    | [] -> u
+                    | _ ->
+                        let d = ds |> List.reduce times
+                        if u = NoUnit then 
+                            Count(Times 1N) |> per d
+                        else u |> per d
+                | h::tail, _ ->
+                    if ds |> List.exists (Group.eqsGroup h) then
+                        build tail (ds |> List.remove1 (Group.eqsGroup h)) u
+                    else
+                        if u = NoUnit then h
+                        else u |> times h
+                        |> build tail ds 
 
-                let ul' = 
-                    ru 
-                    |> List.fold (fun acc u ->
-                        acc |> remove u
-                    ) ul
+            let ns, ds = u |> numDenom true 
 
-                let ur' = 
-                    ru 
-                    |> List.fold (fun acc u ->
-                        acc |> remove u
-                    ) ur
+            NoUnit
+            |> build ns ds
+            |> (fun u -> if u = NoUnit then count else u)
 
-                (simpl ul', op, simpl ur') 
-                |> createCombiUnit
-            | _ -> u
-             
-        u 
-        |> simpl
-        |> (fun u ->
-            vu
-            |> toBase
-            |> create u
-            |> toUnit
-            |> create u
-        )           
+        u
+        |> function
+        | _ when u = NoUnit -> vu
+        | _ ->
+            u
+            |> simpl
+            |> (fun u ->
+                vu
+                |> toBase
+                |> create u
+                |> toUnit
+                |> create u
+            )           
+
 
 
     let calc op vu1 vu2 = 

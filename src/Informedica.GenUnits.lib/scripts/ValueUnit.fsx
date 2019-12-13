@@ -1,4 +1,5 @@
-﻿#I __SOURCE_DIRECTORY__
+﻿
+#I __SOURCE_DIRECTORY__
 
 #load @"../../../.paket/load/netstandard2.1/main.group.fsx"
 #load @"../ValueUnit.fs"
@@ -79,7 +80,9 @@ let test () =
     // Print true = waar
     |> printfn "%A"
 
-
+let mg1 = 1N |> create Units.Mass.milliGram
+let piece = 1N |> create (Units.General.general "piece")
+[mg1; mg1; piece] |> List.reduce (/) |> ValueUnit.get |> snd
 
 module Demo =
 

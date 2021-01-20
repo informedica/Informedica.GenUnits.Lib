@@ -198,6 +198,9 @@ module ValueUnit =
         apply f
 
 
+    let getUnitValue u = id
+
+
     module Group =
 
         type Group =

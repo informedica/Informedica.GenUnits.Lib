@@ -2,12 +2,12 @@
     <PropertyGroup>
         <!-- summary is not migrated from project.json, but you can use the <Description> property for that if needed. -->
         <PackageTags>f#, fsharp</PackageTags>
-        <PackageProjectUrl>https://github.com/MyGithubUsername/GenUnits</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/MyGithubUsername/GenUnits/blob/master/LICENSE.md</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/informedica/Informedica.GenUnits.Lib</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/informedica/Informedica.GenUnits.Lib/blob/master/LICENSE.md</PackageLicenseUrl>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <RepositoryType>git</RepositoryType>
-        <Authors>MyGithubUsername</Authors>
-        <RepositoryUrl>https://github.com/MyGithubUsername/GenUnits</RepositoryUrl>
+        <Authors>informedica</Authors>
+        <RepositoryUrl>https://github.com/informedica/Informedica.GenUnits.Lib</RepositoryUrl>
         <!-- owners is not supported in MSBuild -->
     </PropertyGroup>
 </Project>

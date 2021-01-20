@@ -7,6 +7,7 @@
     </PropertyGroup>
     <ItemGroup>
         <None Include="paket.references" />
+        <Compile Include="AssemblyInfo.fs" />
         <Compile Include="ValueUnit.fs" />
         <Compile Include="Main.fs" />
     </ItemGroup>

@@ -20,8 +20,8 @@ module Parser =
         |> many
 
 
-    let pUnit =
-        Units.units
+    let pUnit (units : Units.UnitDetails list) =
+        units
         |> List.collect (fun ud ->
             [
                 ud.Abbreviation.Dut, fun n -> n |> setUnitValue ud.Unit
@@ -42,25 +42,25 @@ module Parser =
             |>> (fun (f, u) -> f |> Option.bind BigRational.fromFloat, u)
 
 
-    let pCombiUnit =  sepBy1 pUnit (ws >>. (pchar '/') .>> ws)
+    let pCombiUnit units =  sepBy1 (pUnit units) (ws >>. (pchar '/') .>> ws)
 
 
-    let pValueUnit =
+    let pValueUnit units =
         (opt pfloat)
         |>> (Option.bind BigRational.fromFloat)
         .>> ws
-        .>>. pCombiUnit
+        .>>. (pCombiUnit units)
         .>> ws
 
 
-    let parse s =
+    let parseWitUnits units s =
         if s |> String.isNullOrWhiteSpace then None
         else
             s
             |> String.trim
             |> String.replace "," "."
             |> String.toLower
-            |> run pValueUnit
+            |> run (pValueUnit units)
             |> function
             | Success (result, _, _) ->
                 let v, us = result
@@ -81,3 +81,5 @@ module Parser =
             | Failure (msg, _, _) ->
                 printfn "parsing failure: %s" msg
                 None
+
+    let parse = parseWitUnits Units.units

@@ -478,7 +478,7 @@ module ValueUnit =
 
     let count = 1N |> Times |> Count
 
-
+    // Note need to fix 10 g/10 g resulting in 10 times
     let createCombiUnit (u1, op, u2)  =
         if u1 = NoUnit && u2 = NoUnit then NoUnit
         else
@@ -501,6 +501,7 @@ module ValueUnit =
                 match u1, u2 with
                 | _ when u1 |> Group.eqsGroup u2 -> u1
                 | _ -> (u1, op, u2) |> CombiUnit
+
 
     let per u2 u1 = (u1, OpPer, u2) |> createCombiUnit
 
@@ -1004,8 +1005,8 @@ module ValueUnit =
                 { Unit = Molar.mol; Group = Group.NoGroup;  Abbreviation = { Eng = "mol"; Dut = "mol" }; Name = { Eng = "mol"; Dut = "mol" }; Synonyms = [] }
                 { Unit = Molar.milliMol; Group = Group.NoGroup;  Abbreviation = { Eng = "mmol"; Dut = "mmol" }; Name = { Eng = "millimol"; Dut = "millimol" }; Synonyms = [] }
 
-                { Unit = Weight.kiloGram; Group = Group.NoGroup;  Abbreviation = { Eng = "kg"; Dut = "kg" }; Name = { Eng = "kilogram"; Dut = "kilogram" }; Synonyms = ["kg(W)"] }
-                { Unit = Weight.gram; Group = Group.NoGroup;  Abbreviation = { Eng = "g"; Dut = "g" }; Name = { Eng = "gram"; Dut = "gram" }; Synonyms = ["gr"; "gr(W)"] }
+                { Unit = Weight.kiloGram; Group = Group.NoGroup;  Abbreviation = { Eng = "kg"; Dut = "kg" }; Name = { Eng = "kilogram"; Dut = "kilogram" }; Synonyms = [] }
+                { Unit = Weight.gram; Group = Group.NoGroup;  Abbreviation = { Eng = "g"; Dut = "g" }; Name = { Eng = "gram"; Dut = "gram" }; Synonyms = [ "gr" ] }
 
                 { Unit = BSA.M2; Group = Group.NoGroup;  Abbreviation = { Eng = "m2"; Dut = "m2" }; Name = { Eng = "square meter"; Dut = "vierkante meter" }; Synonyms = ["gr"] }
 

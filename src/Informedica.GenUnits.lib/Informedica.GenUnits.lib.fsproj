@@ -5,6 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="paket.references" />
+    <None Include="paket.template" />
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="ValueUnit.fs" />
     <Compile Include="Api.fs" />

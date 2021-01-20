@@ -1,3 +1,6 @@
+#### 1.0.1-beta - Dec 3 2019
+* Fixed a bug with simplifying combined units
+
 #### 1.0.0-beta - Dec 3 2019
 * Complete workover of the core code
 * Moved everything to dotnetcore

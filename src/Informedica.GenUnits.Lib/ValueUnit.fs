@@ -193,6 +193,10 @@ module ValueUnit =
 
         app u
 
+    let setUnitValue v =
+        let f = fun _ -> v
+        apply f
+
 
     module Group =
 
@@ -478,7 +482,7 @@ module ValueUnit =
 
     let count = 1N |> Times |> Count
 
-    // Note need to fix 10 g/10 g resulting in 10 times
+
     let createCombiUnit (u1, op, u2)  =
         if u1 = NoUnit && u2 = NoUnit then NoUnit
         else
@@ -486,20 +490,36 @@ module ValueUnit =
             | OpPer ->
                 match u1, u2 with
                 | _ when u1 |> Group.eqsGroup u2 ->
-                    count
+                    let v1 = u1 |> Multipliers.getMultiplier
+                    let v2 = u2 |> Multipliers.getMultiplier
+                    count |> setUnitValue (v1 / v2)
                 | _ when u2 |> Group.eqsGroup count ->
-                    u1
+                    let v1 = u1 |> Multipliers.getMultiplier
+                    let v2 = u2 |> Multipliers.getMultiplier
+                    u1 |> setUnitValue (v1 / v2)
                 | _ -> (u1, OpPer, u2) |> CombiUnit
             | OpTimes ->
                 match u1, u2 with
-                | _ when u1 |> Group.eqsGroup count -> u2
-                | _ when u2 |> Group.eqsGroup count -> u1
+                | _ when u1 |> Group.eqsGroup count ->
+                    let v1 = u1 |> Multipliers.getMultiplier
+                    let v2 = u2 |> Multipliers.getMultiplier
+                    u2 |> setUnitValue (v1 * v2)
+                | _ when u2 |> Group.eqsGroup count ->
+                    let v1 = u1 |> Multipliers.getMultiplier
+                    let v2 = u2 |> Multipliers.getMultiplier
+                    u1 |> setUnitValue (v1 * v2)
                 | _ when u1 |> Group.eqsGroup count &&
-                         u2 |> Group.eqsGroup count -> u1
+                         u2 |> Group.eqsGroup count ->
+                    let v1 = u1 |> Multipliers.getMultiplier
+                    let v2 = u2 |> Multipliers.getMultiplier
+                    u1 |> setUnitValue (v1 * v2)
                 | _ -> (u1, OpTimes, u2) |> CombiUnit
             | OpPlus | OpMinus ->
                 match u1, u2 with
-                | _ when u1 |> Group.eqsGroup u2 -> u1
+                | _ when u1 |> Group.eqsGroup u2 ->
+                    let v1 = u1 |> Multipliers.getMultiplier
+                    let v2 = u2 |> Multipliers.getMultiplier
+                    u1 |> setUnitValue (v1 + v2)
                 | _ -> (u1, op, u2) |> CombiUnit
 
 
@@ -1137,58 +1157,6 @@ module ValueUnit =
                     )
 
             str u
-
-
-
-    let setUnitValue v u =
-                match u with
-                | NoUnit -> u
-                | General (s, _) -> (s, v) |> General
-                | Count g ->
-                    match g with
-                    | Times _ -> v |> Times |> Count
-                | Mass g  ->
-                    match g with
-                    | KiloGram _  -> v |> KiloGram |> Mass
-                    | Gram _      -> v |> Gram |> Mass
-                    | MilliGram _ -> v |> MilliGram |> Mass
-                    | MicroGram _ -> v |> MicroGram |> Mass
-                    | NanoGram _  -> v |> KiloGram |> Mass
-                | Volume g  ->
-                    match g with
-                    | Liter _      -> v |> Liter |> Volume
-                    | DeciLiter _  -> v |> DeciLiter |> Volume
-                    | MilliLiter _ -> v |> MilliLiter |> Volume
-                    | MicroLiter _ -> v |> MicroLiter |> Volume
-                | Time g  ->
-                    match g with
-                    | Year _   -> v |> Year |> Time
-                    | Month _  -> v |> Month |> Time
-                    | Week _   -> v |> Week |> Time
-                    | Day _    -> v |> Day |> Time
-                    | Hour _   -> v |> Hour |> Time
-                    | Minute _ -> v |> Minute |> Time
-                    | Second _ -> v |> Second |> Time
-                | Molar g ->
-                    match g with
-                    | Mol _      -> v |> Mol |> Molar
-                    | MilliMol _ -> v |> MilliMol |> Molar
-                | InterNatUnit g ->
-                    match g with
-                    | MIU _ -> v |> MIU |> InterNatUnit
-                    | IU _  -> v |> IU |> InterNatUnit
-                | Weight g ->
-                    match g with
-                    | WeightKiloGram _ -> v |> WeightKiloGram |> Weight
-                    | WeightGram _     -> v |> WeightGram |> Weight
-                | Height g ->
-                    match g with
-                    | HeightMeter _      -> v |> HeightMeter |> Height
-                    | HeightCentiMeter _ -> v |> HeightCentiMeter |> Height
-                | BSA g ->
-                    match g with
-                    | M2 _ -> v |> M2 |> BSA
-                | CombiUnit _ -> u
 
 
     let toString loc verb vu =

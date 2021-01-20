@@ -9,6 +9,7 @@
 #load @"../Parser.fs"
 #load @"../Api.fs"
 
+open MathNet.Numerics
 open Informedica.GenUnits.Lib
 open ValueUnit
 
@@ -39,6 +40,19 @@ let parse =
 | None ->
     failwith "cannot parse"
 
-// failing example of combi unit
-"10 gram/10 gram"
+// fix calculation count when combining units
+"1 g/100 mg"
 |> parse
+|> Option.map simplify
+|> Option.map (fun vu -> vu * (1N |> create count))
+
+"10 gram/dag"
+|> parse
+|> Option.map (fun vu ->
+    vu
+    |> get
+    |> snd
+    |> setUnitValue 2N
+)
+
+Units.Mass.milliGram |> Multipliers.getMultiplier

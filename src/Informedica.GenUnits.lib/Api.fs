@@ -1,9 +1,9 @@
-﻿namespace Informedica.GenUnits.Lib
+namespace Informedica.GenUnits.Lib
 
 
 module Api =
 
-    open Informedica.GenUtils.Lib.BCL
+    open Informedica.Utils.Lib.BCL
 
     module VU = ValueUnit
 

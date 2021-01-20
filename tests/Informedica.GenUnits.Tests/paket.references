@@ -1,6 +1,7 @@
-group Test
-	Expecto
-	Expecto.BenchmarkDotNet
-	Expecto.FsCheck
-	Expecto.Hopac
-	FSharp.Quotations.Evaluator
+Expecto
+Expecto.FsCheck
+Unquote
+FSharp.Core
+Microsoft.NET.Test.Sdk
+YoloDev.Expecto.TestSdk
+altcover

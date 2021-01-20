@@ -17,20 +17,45 @@
 # Add fsx files
 !*.fsx
 
-# Add command and batch files
-!*.cmd
-!*.sh
+# Add build files
+!build.sh
+!build.cmd
 
-#ignore release and nuget publish command files
-release.cmd
-publishnuget.cmd
+# Add build props
+!Directory.Build.props
+
+# Add global json
+!global.json
+
+# Add editor config
+!.editorconfig
+
+# Add vscode config
+!/.vscode/
+!/.vscode/*.json
 
 # Add proc file
 !Procfile
 
-# Add paket bootstrapper
+# Add local tools config
+!/.config/
+!/.config/*.json
+
+# Add paket targets
 !/.paket/
-!/.paket/paket.bootstrapper.exe
+!/.paket/Paket.Restore.targets
+
+# Add github folder
+!/.github
+!/.github/*
+!/.github/ISSUE_TEMPLATE/
+!/.github/ISSUE_TEMPLATE/*
+!/.github/workflows/
+!/.github/workflows/*
+
+# Add devcontainer
+!/.devcontainer/
+!/.devcontainer/*
 
 # Add dependencies file
 !paket.dependencies
@@ -49,10 +74,11 @@ publishnuget.cmd
 !*.fsproj
 
 # Add configurarion files
-!*App.config
+!App.config
 
 # Add fsharp source files
 !*.fs
+
 
 # Add source files
 !/scripts/
@@ -64,18 +90,17 @@ publishnuget.cmd
 !/tests/
 !/tests/Informedica.GenUnits.Tests/
 
-# Ignore generated documentation files
-/docs/content/**/*.md
+# Add documentation tools 
+!/docsTool/
+!/docsTool/templates/
+
+# Add documentation source files
+!/docsSrc/
+!/docsSrc/**
 
 # Add documentation
 !/docs/
-!/docs/content/
-!/docs/tools/
-!/docs/tools/templates/
-!/docs/tools/templates/*.cshtml
-!/docs/files/
-!/docs/files/img/
-!/docs/files/img/*.png
+!/docs/**
 
 
 

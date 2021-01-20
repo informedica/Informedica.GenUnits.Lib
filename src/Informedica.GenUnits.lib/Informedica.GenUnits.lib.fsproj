@@ -1,19 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <LangVersion>preview</LangVersion>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="paket.references" />
-    <None Include="paket.template" />
-    <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="ValueUnit.fs" />
-    <Compile Include="Api.fs" />
-    <None Include="Scripts\Scripts.fsx" />
-    <None Include="Scripts\references.fsx" />
-    <None Include="scripts\Simplify.fsx" />
-    <None Include="Scripts\ValueUnit.fsx" />
-    <None Include="scripts\Api.fsx" />
-  </ItemGroup>
-  <Import Project="..\..\.paket\Paket.Restore.targets" />
+    <PropertyGroup>
+        <TargetFrameworks>net5.0</TargetFrameworks>
+    </PropertyGroup>
+    <PropertyGroup>
+        <Title>Informedica.GenUnits.Lib</Title>
+        <Description>Library for handling value units</Description>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <Optimize>true</Optimize>
+        <Tailcalls>true</Tailcalls>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="paket.references" />
+        <Compile Include="AssemblyInfo.fs" />
+        <Compile Include="ValueUnit.fs" />
+        <Compile Include="Api.fs" />
+        <None Include="Scripts\Scripts.fsx" />
+        <None Include="Scripts\references.fsx" />
+        <None Include="scripts\Simplify.fsx" />
+        <None Include="Scripts\ValueUnit.fsx" />
+        <None Include="scripts\Api.fsx" />
+    </ItemGroup>
+    <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

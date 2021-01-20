@@ -1,18 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-	<LangVersion>preview</LangVersion>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="paket.references" />
-    <None Include="Scripts/Script.fsx" />
-    <Compile Include="ValueUnit.fs" />
-    <Compile Include="Main.fs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Informedica.GenUnits.Lib\Informedica.GenUnits.Lib.fsproj" />
-  </ItemGroup>
-  <Import Project="..\..\.paket\Paket.Restore.targets" />
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFrameworks>net5.0</TargetFrameworks>
+        <GenerateProgramFile>false</GenerateProgramFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="paket.references" />
+        <Compile Include="ValueUnit.fs" />
+        <Compile Include="Main.fs" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Informedica.GenUnits.Lib\Informedica.GenUnits.Lib.fsproj" />
+    </ItemGroup>
+    <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

@@ -1,4 +1,4 @@
-﻿
+
 #I __SOURCE_DIRECTORY__
 
 #load @"../../../.paket/load/netstandard2.1/main.group.fsx"
@@ -8,7 +8,7 @@
 open MathNet.Numerics
 
 open Informedica.GenUnits.Lib
-open Informedica.GenUtils.Lib.BCL
+open Informedica.Utils.Lib.BCL
 open ValueUnit
 
 let toString = toString Units.English Units.Short

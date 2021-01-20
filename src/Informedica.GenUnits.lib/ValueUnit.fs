@@ -1,4 +1,4 @@
-﻿namespace Informedica.GenUnits.Lib
+namespace Informedica.GenUnits.Lib
 
 
 module List =
@@ -18,8 +18,8 @@ module ValueUnit =
 
     open MathNet.Numerics
 
-    open Informedica.GenUtils.Lib
-    open Informedica.GenUtils.Lib.BCL
+    open Informedica.Utils.Lib
+    open Informedica.Utils.Lib.BCL
 
 
     type Value = BigRational

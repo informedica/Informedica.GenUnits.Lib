@@ -1,28 +1,50 @@
-redirects: on
-framework: auto-detect
-
+source https://www.nuget.org/api/v2
 source https://api.nuget.org/v3/index.json
+storage: none
+nuget FSharp.Core 5.0
+nuget Microsoft.SourceLink.GitHub 1.0.0 copy_local: true
+nuget Expecto 9.0.2
+nuget YoloDev.Expecto.TestSdk 0.9.2
+nuget Microsoft.NET.Test.Sdk 16.8.0
+nuget altcover ~> 7
+nuget Expecto.FsCheck
+nuget Unquote
+nuget Informedica.Utils.Lib
 
-clitool dotnet-fake
-
-nuget MathNet.Numerics.FSharp
-nuget Informedica.GenUtils.Lib
-
-group Formatting
-	source https://api.nuget.org/v3/index.json
-
-	nuget FSharp.Formatting
-	nuget FSharp.Formatting.CommandTool
-
-
-// group test
-group Test
-    source https://api.nuget.org/v3/index.json
-    framework: netcoreapp3.0
+// [ FAKE GROUP ]
+group Build
     storage: none
+    source https://www.nuget.org/api/v2
+    source https://api.nuget.org/v3/index.json
+    nuget Fake.IO.FileSystem 5.20.4-alpha.1642
+    nuget Fake.Core.Target 5.20.4-alpha.1642
+    nuget Fake.Core.ReleaseNotes 5.20.4-alpha.1642
+    nuget FAKE.Core.Environment 5.20.4-alpha.1642
+    nuget Fake.DotNet.Cli 5.20.4-alpha.1642
+    nuget FAKE.Core.Process 5.20.4-alpha.1642
+    nuget Fake.DotNet.AssemblyInfoFile 5.20.4-alpha.1642
+    nuget Fake.Tools.Git 5.20.4-alpha.1642
+    nuget Fake.DotNet.Paket 5.20.4-alpha.1642
+    nuget Fake.Api.GitHub 5.20.4-alpha.1642
+    nuget Fake.BuildServer.AppVeyor 5.20.4-alpha.1642
+    nuget Fake.BuildServer.Travis 5.20.4-alpha.1642
+    nuget Fantomas 3.2
+    nuget Argu
 
-	nuget Expecto
-	nuget Expecto.BenchmarkDotNet
-	nuget Expecto.FsCheck
-	nuget Expecto.Hopac
-	nuget FSharp.Quotations.Evaluator
+group Docs
+    storage: none
+    source https://www.nuget.org/api/v2
+    source https://api.nuget.org/v3/index.json
+    nuget Argu
+    nuget FSharp.Core
+    nuget Fake.IO.FileSystem 5.20.4-alpha.1642
+    nuget FAKE.Core.Environment 5.20.4-alpha.1642
+    nuget Fake.DotNet.Cli 5.20.4-alpha.1642
+    nuget FSharp.Formatting 4.0.0-rc1
+    nuget FSharp.Literate 4.0.0-rc1
+    nuget Fable.React
+
+group Analyzers
+  source https://www.nuget.org/api/v2
+  source https://api.nuget.org/v3/index.json
+  nuget BinaryDefense.FSharp.Analyzers.Hashing 0.1.0

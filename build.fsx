@@ -715,7 +715,7 @@ Target.create "ReleaseDocs" releaseDocs
     ==> "DotnetBuild"
 //    ==> "FSharpAnalyzers"
     ==> "DotnetTest"
-    =?> ("GenerateCoverageReport", not disableCodeCoverage)
+   =?> ("GenerateCoverageReport", not disableCodeCoverage)
     ==> "DotnetPack"
 //    ==> "SourceLinkTest"
     ==> "PublishToNuGet"
